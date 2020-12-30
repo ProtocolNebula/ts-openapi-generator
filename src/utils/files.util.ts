@@ -32,7 +32,7 @@ export async function downloadFile(url, dest): Promise<string> {
 }
 
 export function getTemplate(templateFile) {
-  const fullPath = pathResolve(__dirname, '..', 'templates', templateFile);
+  const fullPath = pathResolve(__dirname, '..', '..', 'templates', templateFile);
   return readFileSync(fullPath, 'utf-8');
 }
 
