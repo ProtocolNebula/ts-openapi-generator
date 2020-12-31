@@ -6,6 +6,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.0.2] - 2020-12-31
+### Added
+- Getter/Setter for verb in API
+
+### Fixed
+- API template "verb" was wrong
+- nodemon settings for start:dev
+
 ## [2.0.1] - 2020-12-31
 ### Fixed
 - Readme.md install command
