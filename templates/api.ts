@@ -50,7 +50,7 @@ export class {{groupName}}Service {
     requestBody: {{.}},{{/requestBodyType
   }}
   ): Observable<{{ responseType }}> {
-    return this.apiService.do{{action}}(
+    return this.apiService.do{{verb}}(
       '{{{ url }}}',
       {{#queryParamsType}}uriOptions{{/queryParamsType}}{{^queryParamsType}}null{{/queryParamsType}},
       {{#requestBodyType}}requestBody{{/requestBodyType}}{{^requestBodyType}}null{{/requestBodyType}}

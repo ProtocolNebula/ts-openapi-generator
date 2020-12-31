@@ -1,4 +1,4 @@
-import { camel } from 'case';
+import { camel, capital } from 'case';
 import { ModelStore } from '../stores/model.store';
 import { ApiURLModel } from './api-url.model';
 import { PhysycalFile } from './entities';
@@ -6,7 +6,7 @@ import { ModelAttributessModel } from './model-attributes.model';
 
 export class ApiModel implements PhysycalFile {
   url: string;
-  verb: string;
+  _verb: string;
   childrens: ApiURLModel[];
   description?: string;
   example?: string;
@@ -55,6 +55,13 @@ export class ApiModel implements PhysycalFile {
   }
   get responseType(): string {
     return this.response?.type || 'void';
+  }
+
+  get verb(): string {
+    return this._verb;
+  }
+  set verb(verb: string) {
+    this._verb = capital(verb);
   }
 
   constructor(url: string, verb: string) {
