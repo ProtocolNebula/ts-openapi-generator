@@ -22,7 +22,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Getter/Setter for verb in API
 
-### Fixed
+### Fixed
 - API template "verb" was wrong
 - nodemon settings for start:dev
 
@@ -31,7 +31,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Readme.md install command
 - Moved package.json from devDependencies to dependencies
 
-### Changed
+### Changed
 - `templates` folder moved to `root` folder
 
 ### Removed
