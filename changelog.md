@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.0.3] - 2021-01-02
+
+### Fixed
+- nodemon: added "templates" folder
+- Removed empty comments in the generated **files**
+
 ## [2.0.2] - 2020-12-31
 ### Added
 - Getter/Setter for verb in API

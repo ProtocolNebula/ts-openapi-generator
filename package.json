@@ -1,6 +1,6 @@
 {
   "name": "@protocolnebula/ts-openapi-generator",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "Build API and models from Swagger/OpenAPI to use in any project type",
   "main": "dist/main.js",
   "types": "dist/main.d.ts",
