@@ -23,7 +23,7 @@ export class ApiModel implements PhysycalFile {
   }
 
   get groupName(): string {
-    return this.tags[0]?.length ? this.tags[0] : null;
+    return this.tags[0]?.length ? capital(this.tags[0]) : null;
   }
 
   get models(): ModelAttributessModel[] {
