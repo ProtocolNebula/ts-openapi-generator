@@ -20,6 +20,10 @@ export class ModelAttributessModel {
     this._typeURI = typeURI;
   }
 
+  get hasComments(): boolean {
+    return !!this.description || !!this.example || !!this.deprecated;
+  }
+
   /**
    * Return the type parsed, (class or primitive)
    */

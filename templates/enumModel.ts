@@ -1,4 +1,5 @@
 {{#model}}
+{{#hasComments}}
 /**
 {{#description}}
   * {{description}}
@@ -10,6 +11,7 @@
   * @deprecated
 {{/deprecated}}
  */
+{{/hasComments}}
 export enum {{ name }} {
   {{#values}}
   '{{.}}' = '{{.}}',

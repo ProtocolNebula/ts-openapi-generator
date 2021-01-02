@@ -27,6 +27,10 @@ export class ModelModel implements PhysycalFile {
     return this._attributes;
   }
 
+  get hasComments(): boolean {
+    return !!this.description || !!this.example || !!this.deprecated;
+  }
+
   getDependences(store: ModelStore): PhysycalFile[] {
     const dependences = new Set<PhysycalFile>();
 

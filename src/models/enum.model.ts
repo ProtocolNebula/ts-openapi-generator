@@ -33,6 +33,10 @@ export class EnumModel<T = string> implements PhysycalFile {
     return `#/components/schemas/${this.name}`;
   }
 
+  get hasComments(): boolean {
+    return !!this.description || !!this.example || !!this.deprecated;
+  }
+
   get values(): T[] {
     return this._values;
   }

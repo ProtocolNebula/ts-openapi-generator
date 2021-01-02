@@ -47,6 +47,10 @@ export class ApiModel implements PhysycalFile {
     this._operationId = camel(operation);
   }
 
+  get hasComments(): boolean {
+    return !!this.description || !!this.example || !!this.deprecated;
+  }
+
   get queryParamsType(): string {
     return this.queryParams?.type;
   }

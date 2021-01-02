@@ -28,7 +28,8 @@ export class {{groupName}}Service {
   ) {
   }
 
-{{#apis}}
+  {{#apis}}
+  {{#hasComments}}
   /**
   {{#description}}
    * {{description}}
@@ -40,6 +41,7 @@ export class {{groupName}}Service {
    * @deprecated
   {{/deprecated}}
   */
+  {{/hasComments}}
   {{!
     // Will add options and requestBody if necessary
     // If both, will add comma between
@@ -57,5 +59,5 @@ export class {{groupName}}Service {
     );
   }
 
-{{/apis}}
+  {{/apis}}
 }

@@ -2,6 +2,7 @@
 import { {{name}} } from './{{fileName}}';
 {{/dependences}}
 
+{{#hasComments}}
 /**
 {{#description}}
   * {{description}}
@@ -13,11 +14,12 @@ import { {{name}} } from './{{fileName}}';
   * @deprecated
 {{/deprecated}}
  */
+{{/hasComments}}
 {{#model}}
 export class {{ name }} {
 
   {{#attributes}}
-  {{#description}}
+  {{#hasComments}}
   /**
   {{#description}}
    * {{description}}
@@ -29,7 +31,7 @@ export class {{ name }} {
    * @deprecated
   {{/deprecated}}
    */
-  {{/description}}
+  {{/hasComments}}
   {{name}}{{#isOptional}}?{{/isOptional}}: {{type}}{{#isArray}}[]{{/isArray}}{{#default}} = {{default}}{{/default}};
 
   {{/attributes}}
