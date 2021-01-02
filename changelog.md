@@ -6,6 +6,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- Now `-v` is available as parameter as `--version` alias.
+
 ## [2.1.0] - 2021-01-02
 
 ### Changed
