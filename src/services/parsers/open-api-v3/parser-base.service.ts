@@ -125,14 +125,15 @@ export abstract class ParserBaseService {
       instance.typeURI = schema.$ref;
       return instance;
     } else if (this.isSchemaObject(schema)) {
-      if (mediaType === 'text/html') {
-        const instance = new ModelAttributessModel(null);
-        instance.typeURI = schema.type;
-        return instance;
-      }
       if (schema.type === 'array') {
         const instance = this.parseSchema(schema.items, defaultName, mediaType);
         instance.isArray = true;
+        return instance;
+      }
+
+      if (mediaType === 'text/html' || schema?.type !== 'object') {
+        const instance = new ModelAttributessModel(null);
+        instance.typeURI = schema.type;
         return instance;
       }
 
