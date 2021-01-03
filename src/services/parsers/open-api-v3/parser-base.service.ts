@@ -1,4 +1,4 @@
-import { camel } from 'case';
+import { capital } from 'case';
 import { OpenAPIV3 } from 'openapi-types';
 import { ModelAttributessModel } from '../../../models/model-attributes.model';
 import { ModelModel } from '../../../models/model.model';
@@ -95,7 +95,7 @@ export abstract class ParserBaseService {
         const parameter = new ModelAttributessModel(rawParameter.name);
         parameter.typeURI = this.parseSchema(
           rawParameter.schema,
-          camel(`${defaultName} ${rawParameter.name}`),
+          capital(`${defaultName} ${rawParameter.name}`, '', true),
         )?.typeURI;
         parameter.description = rawParameter.description;
         parameter.deprecated = rawParameter.deprecated;

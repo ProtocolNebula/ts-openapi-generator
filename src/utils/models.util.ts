@@ -1,4 +1,4 @@
-import { camel } from 'case';
+import { capital } from 'case';
 import { ApiModel } from '../models/api.model';
 import { PhysycalFile } from '../models/entities';
 import { Store } from '../stores/entities.store';
@@ -65,5 +65,5 @@ export function getApiDefaultModelName(
   api: ApiModel,
   modelFor: string = 'request',
 ): string {
-  return camel(`${api.verb.toLowerCase()} ${api.name} ${modelFor}`);
+  return capital(`${api.verb.toLowerCase()} ${api.name} ${modelFor}`, '', true);
 }
