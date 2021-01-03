@@ -6,6 +6,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+
+## [2.1.1] - 2021-01-03
+
+### Added
+- Now `-v` is available as parameter as `--version` alias.
+
+### Changed
+- Auto-generated types (parameters, request body, ... without explicit declaration) forced to to CapitalCase (UpperCamelCase).
+> Please check and update your code after generate the template.
+
+### Fixed
+- "Native" types previously was generating a new model in parameters or other cases.
+
 ## [2.1.0] - 2021-01-02
 
 ### Changed

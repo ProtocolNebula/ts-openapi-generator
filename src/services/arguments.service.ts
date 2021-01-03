@@ -1,6 +1,7 @@
 import * as yargs from 'yargs';
 
 export const argumentsInstance = yargs
+  .alias('version', 'v')
   .usage('Usage: $0 [options]')
   // .command('count', 'Count the lines in a file')
   .example(

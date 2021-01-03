@@ -1,4 +1,4 @@
-import { camel } from 'case';
+import { capital } from 'case';
 import { OpenAPIV3 } from 'openapi-types';
 import { ModelAttributessModel } from '../../../models/model-attributes.model';
 import { ModelModel } from '../../../models/model.model';
@@ -95,7 +95,7 @@ export abstract class ParserBaseService {
         const parameter = new ModelAttributessModel(rawParameter.name);
         parameter.typeURI = this.parseSchema(
           rawParameter.schema,
-          camel(`${defaultName} ${rawParameter.name}`),
+          capital(`${defaultName} ${rawParameter.name}`, '', true),
         )?.typeURI;
         parameter.description = rawParameter.description;
         parameter.deprecated = rawParameter.deprecated;
@@ -125,14 +125,15 @@ export abstract class ParserBaseService {
       instance.typeURI = schema.$ref;
       return instance;
     } else if (this.isSchemaObject(schema)) {
-      if (mediaType === 'text/html') {
-        const instance = new ModelAttributessModel(null);
-        instance.typeURI = schema.type;
-        return instance;
-      }
       if (schema.type === 'array') {
         const instance = this.parseSchema(schema.items, defaultName, mediaType);
         instance.isArray = true;
+        return instance;
+      }
+
+      if (mediaType === 'text/html' || schema?.type !== 'object') {
+        const instance = new ModelAttributessModel(null);
+        instance.typeURI = schema.type;
         return instance;
       }
 
