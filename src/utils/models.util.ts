@@ -5,18 +5,21 @@ import { Store } from '../stores/entities.store';
 
 export function getFixedTypeName(type: string): string {
   let parsedTypes = {
+    '': 'any',
+    any: 'any',
+    array: 'any[]',
     bool: 'boolean',
     boolean: 'boolean',
-    string: 'string',
-    integer: 'number',
     double: 'number',
+    empty: 'void',
+    file: 'File',
     float: 'number',
+    integer: 'number',
     number: 'number',
-    array: 'any[]',
-    '': 'any',
-    undefined: 'any',
     object: 'any',
-    any: 'any',
+    string: 'string',
+    undefined: 'any',
+    void: 'void',
   };
 
   let newType = parsedTypes[type];

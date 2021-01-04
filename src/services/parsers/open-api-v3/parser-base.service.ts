@@ -120,6 +120,13 @@ export abstract class ParserBaseService {
     defaultName: string,
     mediaType: string = null,
   ): ModelAttributessModel {
+    if (!schema) {
+      console.warn('WARNING: No schema defined! Any will be use instead');
+      console.warn('TIP: Don\'t fill "content" for responses if void');
+      const instance = new ModelAttributessModel(null);
+      instance.typeURI = 'void';
+      return instance;
+    }
     if (this.isRefObject(schema)) {
       const instance = new ModelAttributessModel(null);
       instance.typeURI = schema.$ref;
