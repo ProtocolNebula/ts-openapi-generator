@@ -25,7 +25,7 @@ export function getFixedTypeName(type: string): string {
   let newType = parsedTypes[type];
   if (newType !== undefined) {
     if (newType !== type) {
-      console.info('Type', type, 'changed to', newType);
+      console.debug('Type', type, 'changed to', newType);
     }
     return parsedTypes[type];
   }
@@ -35,11 +35,11 @@ export function getFixedTypeName(type: string): string {
       newType = type.substring(type.lastIndexOf('/') + 1);
     } else {
       newType = 'any';
-      console.error('ERROR: Type', type, 'not defined. Any will be used');
+      console.error('ERROR: Type', type, 'not defined. Any will be used.');
     }
   } else {
     newType = 'any';
-    console.warn('WARNING: Type', type, 'not defined.');
+    console.warn('WARNING: Type', type, 'not defined. Any will be used.');
   }
 
   return newType;
