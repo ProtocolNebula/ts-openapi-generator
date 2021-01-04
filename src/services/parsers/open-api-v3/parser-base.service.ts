@@ -1,5 +1,6 @@
 import { capital } from 'case';
 import { OpenAPIV3 } from 'openapi-types';
+import { EnumModel } from '../../../models/enum.model';
 import { ModelAttributessModel } from '../../../models/model-attributes.model';
 import { ModelModel } from '../../../models/model.model';
 import { StoreI } from '../../../stores/entities.store';
@@ -78,13 +79,13 @@ export abstract class ParserBaseService {
    * Get an Schema and get the REF
    * If is a custom model (scheme), it will create a new model
    * @param schema
-   * @param defaultName Name for the model if is not a "ref"
+   * @param modelName Name for the model if is not a "ref"
    */
   protected parseParameters(
     parameters: (OpenAPIV3.ReferenceObject | OpenAPIV3.ParameterObject)[],
-    defaultName: string,
+    modelName: string,
   ): ModelAttributessModel {
-    const newModel = new ModelModel(defaultName);
+    const newModel = new ModelModel(modelName);
     for (const rawParameter of parameters) {
       if (this.isRefObject(rawParameter)) {
         throw 'Not implemented REF OBJECT for parameterParser';
@@ -95,7 +96,7 @@ export abstract class ParserBaseService {
         const parameter = new ModelAttributessModel(rawParameter.name);
         parameter.typeURI = this.parseSchema(
           rawParameter.schema,
-          capital(`${defaultName} ${rawParameter.name}`, '', true),
+          capital(`${modelName} ${rawParameter.name}`, '', true),
         )?.typeURI;
         parameter.description = rawParameter.description;
         parameter.deprecated = rawParameter.deprecated;
@@ -120,7 +121,7 @@ export abstract class ParserBaseService {
     defaultName: string,
     mediaType: string = null,
   ): ModelAttributessModel {
-    if (!schema) {
+    if (!schema) {
       console.warn('WARNING: No schema defined! Any will be use instead');
       console.warn('TIP: Don\'t fill "content" for responses if void');
       const instance = new ModelAttributessModel(null);
@@ -138,14 +139,15 @@ export abstract class ParserBaseService {
         return instance;
       }
 
-      if (mediaType === 'text/html' || schema?.type !== 'object') {
+      if (mediaType === 'text/html' || schema?.type !== 'object') {
         const instance = new ModelAttributessModel(null);
         instance.typeURI = schema.type;
         return instance;
       }
 
       const newModel = new ModelModel(defaultName);
-      newModel.addAttributes(this.parseAttributes(schema));
+      newModel.addAttributes(this.parseAttributes(schema, defaultName));
+
       this.store.models.add(newModel);
 
       const instance = new ModelAttributessModel(null);
@@ -158,6 +160,7 @@ export abstract class ParserBaseService {
 
   protected parseAttributes(
     rawModel: OpenAPIV3.NonArraySchemaObject,
+    parentName: string,
   ): ModelAttributessModel[] {
     const attributes: ModelAttributessModel[] = [];
     console.group('Parsing attributes');
@@ -168,7 +171,11 @@ export abstract class ParserBaseService {
         attrName,
         rawModel.required,
       );
-      this.fillAttribute(attribute, rawAttribute);
+      this.fillAttribute(
+        attribute,
+        rawAttribute,
+        capital(`${parentName} ${attrName}`, '', true),
+      );
       attributes.push(attribute);
     }
     console.groupEnd();
@@ -182,7 +189,11 @@ export abstract class ParserBaseService {
     return requiredList?.indexOf(attrName) > -1;
   }
 
-  protected fillAttribute(attribute: ModelAttributessModel, rawAttribute) {
+  protected fillAttribute(
+    attribute: ModelAttributessModel,
+    rawAttribute,
+    defaultName: string,
+  ) {
     const attrName = attribute.name;
     if (this.isRefObject(rawAttribute)) {
       console.debug(`${attrName} is ref of ${rawAttribute.$ref}`);
@@ -198,8 +209,16 @@ export abstract class ParserBaseService {
         if (rawAttribute.type === 'array') {
           console.group(`${attrName} is an array`);
           attribute.isArray = true;
-          this.fillAttribute(attribute, rawAttribute.items);
+          this.fillAttribute(attribute, rawAttribute.items, defaultName);
           console.groupEnd();
+        } else if (rawAttribute.enum) {
+          // (this.isEnumObject(schema)) -> error TS2339:, so "pure if" is used instead
+          console.debug(`${attrName} is ENUM of type ${rawAttribute.type}`);
+          const newModel = new EnumModel(`${defaultName}ENUM`);
+          newModel.type = rawAttribute.type;
+          newModel.values = rawAttribute.enum;
+          this.store.models.add(newModel);
+          attribute.typeURI = newModel.uri;
         } else {
           console.debug(`${attrName} of type ${rawAttribute.type}`);
           attribute.typeURI = rawAttribute.type;

@@ -27,7 +27,9 @@ export class ComponentsParserService extends ParserBaseService {
       if (rawModel.type === 'object') {
         const modelInstance = new ModelModel(modelName);
         elementRef = modelInstance;
-        modelInstance.addAttributes(this.parseAttributes(rawModel));
+        modelInstance.addAttributes(
+          this.parseAttributes(rawModel, modelInstance.name),
+        );
         this.modelStore.add(modelInstance);
       } else if (this.isEnumObject(rawModel)) {
         console.debug(`${modelName} is ENUM of type ${rawModel.type}`);
