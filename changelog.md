@@ -11,7 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - New types to default mapping: File and Void
 
-### Fixed
+### Fixed
 - If response schema is "empty" (ex: json -> with no content) it will detect as `void instead throw an error.
 - Enums in "models" (components) and schemas now generated.
 
