@@ -125,7 +125,7 @@ export abstract class ParserBaseService {
       console.warn('WARNING: No schema defined! Any will be use instead');
       console.warn('TIP: Don\'t fill "content" for responses if void');
       const instance = new ModelAttributessModel(null);
-      instance.typeURI = 'void';
+      instance.typeURI = 'any';
       return instance;
     }
     if (this.isRefObject(schema)) {
