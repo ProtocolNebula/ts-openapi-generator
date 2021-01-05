@@ -23,7 +23,7 @@ export abstract class ParserBaseService {
   protected isEnumObject(
     rawAttribute: any,
   ): rawAttribute is OpenAPIV3.SchemaObject {
-    if ((rawAttribute as OpenAPIV3.SchemaObject).enum) {
+    if ((rawAttribute as OpenAPIV3.SchemaObject)?.enum) {
       return true;
     }
     return false;
@@ -32,7 +32,7 @@ export abstract class ParserBaseService {
   protected isRefObject(
     rawAttribute: any,
   ): rawAttribute is OpenAPIV3.ReferenceObject {
-    if ((rawAttribute as OpenAPIV3.ReferenceObject).$ref) {
+    if ((rawAttribute as OpenAPIV3.ReferenceObject)?.$ref) {
       return true;
     }
     return false;
@@ -41,7 +41,7 @@ export abstract class ParserBaseService {
   protected isSchemaObject(
     rawAttribute: any,
   ): rawAttribute is OpenAPIV3.SchemaObject {
-    if ((rawAttribute as OpenAPIV3.SchemaObject).type) {
+    if ((rawAttribute as OpenAPIV3.SchemaObject)?.type) {
       return true;
     }
     return false;
@@ -50,7 +50,7 @@ export abstract class ParserBaseService {
   protected isParameterObject(
     rawAttribute: any,
   ): rawAttribute is OpenAPIV3.ParameterObject {
-    if ((rawAttribute as OpenAPIV3.ParameterObject).name) {
+    if ((rawAttribute as OpenAPIV3.ParameterObject)?.name) {
       return true;
     }
     return false;
@@ -59,7 +59,7 @@ export abstract class ParserBaseService {
   protected isRequestBodyObject(
     rawAttribute: any,
   ): rawAttribute is OpenAPIV3.RequestBodyObject {
-    if ((rawAttribute as OpenAPIV3.RequestBodyObject).content) {
+    if ((rawAttribute as OpenAPIV3.RequestBodyObject)?.content) {
       return true;
     }
     return false;
@@ -68,7 +68,7 @@ export abstract class ParserBaseService {
   protected isResponseObject(
     rawAttribute: any,
   ): rawAttribute is OpenAPIV3.ResponseObject {
-    if ((rawAttribute as OpenAPIV3.ResponseObject).content) {
+    if ((rawAttribute as OpenAPIV3.ResponseObject)?.content) {
       return true;
     }
     return false;
