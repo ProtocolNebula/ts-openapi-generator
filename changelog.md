@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 
+## [2.1.3] - 2021-01-05
+
+### Changed
+- If **schema** has not been defined, `any` will set again (instead `void`). This **undoes** `2.1.2` partially.
+
+### Fixed
+- Added Elvis operator to all 'isXXX' internal conditional in `parser-base.service.ts`
+  
 ## [2.1.2] - 2021-01-04
 ### Added
 - New types to default mapping: File and Void
