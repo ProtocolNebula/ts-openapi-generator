@@ -40,3 +40,28 @@ transform-swagger -f URI/TO/SWAGGER/JSON/OR/YAML -o src/generatedApi/ -t ./path/
 ### 4 - Just enjoy your saved time!
 
 Easy, right?
+
+
+## File naming (for each template)
+
+Some files are customizable in a `config.js`, that files are explained in `TemplateConfigI` (and are self-explanatory).
+### config.js
+
+File which specify mappings.
+This file implement `TemplateConfigI` interface (`src/models/template-config.model.ts`).
+
+### api.?
+
+File used as template to generate each `Api` class.
+
+An API class is composed by some `endpoints` which share the `same 1rst "tag"`.
+
+### model.?
+
+File used to generate `each model`.
+
+It's exported in a shared folder with all models.
+
+### enumModel.?
+
+Same as `model` but for `enums`.
