@@ -5,7 +5,7 @@ export const argumentsInstance = yargs
   .usage('Usage: $0 [options]')
   // .command('count', 'Count the lines in a file')
   .example(
-    '$0 -f swagger.js',
+    '$0 -f swagger.js -o api/ -t angular2',
     'Convert a Swagger JSON file to compatible-angular API',
   )
   .nargs('file', 1)
