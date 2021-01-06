@@ -14,6 +14,7 @@ export const argumentsInstance = yargs
   .demandOption(['file'])
   .alias('o', 'output-folder')
   .nargs('output-folder', 1)
+  .implies('file', 'output-folder')
   .describe(
     'output-folder',
     'Specify the output folder (generated folders will be replaced)',
@@ -24,4 +25,5 @@ export const argumentsInstance = yargs
   .default('clean', true)
   .help('help')
   .alias('h', 'help')
-  .epilog('copyright 2020').argv;
+  .epilog('For more info visit: https://github.com/ProtocolNebula/ts-openapi-generator/')
+  .argv;
