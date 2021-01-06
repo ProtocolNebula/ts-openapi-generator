@@ -4,7 +4,7 @@
 
 This script is written in `TypeScript`, it can generate all `Models` and `APIs` (serivces) in any kind of language.
 
-By default (and at this moment) it only exports to `Angular 2`.
+Currently it exports to `Angular 2` but you can create your own templates (check [templates folder](templates)).
 
 You can modify those files to adapt to your code.
 

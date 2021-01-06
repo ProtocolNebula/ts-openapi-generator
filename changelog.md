@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.2.0] - 2021-01-06
 ### Added
 - Issue #3 - Custom templates: Now you can create a custom template and use it without modify the source code.
 - Issue #6 - Custom enums mapping: As part of a template, enums are configurable.
