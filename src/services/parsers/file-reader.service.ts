@@ -1,4 +1,5 @@
 import { OpenAPIV3 } from 'openapi-types';
+import { config, ConfigI } from '../../models/config.model';
 import {
   downloadFile,
   fileExtension,
@@ -25,7 +26,7 @@ export class FileReaderService {
     return this._document;
   }
 
-  constructor(private path, private outputFolders: any) {}
+  constructor(private path, private configuration: ConfigI = config) {}
 
   async readFile(): Promise<OpenAPIV3.Document> {
     await this.prepareFile();
@@ -60,7 +61,7 @@ export class FileReaderService {
     }
 
     if (isURL(this.path)) {
-      this.localFilePath = `${this.outputFolders.OUTPUT_PATH}temp.${extension}`;
+      this.localFilePath = `${this.configuration.outputPath}temp.${extension}`;
       console.log(`${this.path} will be saved as ${this.localFilePath}...`);
       await downloadFile(this.path, this.localFilePath);
       console.log(`${this.localFilePath} saved!`);

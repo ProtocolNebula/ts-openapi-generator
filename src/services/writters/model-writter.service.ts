@@ -1,5 +1,6 @@
 import * as mustache from 'mustache';
 import { resolve as pathResolve } from 'path';
+import { config, ConfigI } from '../../models/config.model';
 import { EnumModel } from '../../models/enum.model';
 import { StoreI } from '../../stores/entities.store';
 import { ModelType } from '../../stores/model.store';
@@ -17,19 +18,19 @@ export class ModelWritterService {
   private enumTemplate = 'enumModel.ts';
   private exportExtension = 'ts';
 
-  constructor(private outputFolders: any, private store: StoreI) {}
+  constructor(private store: StoreI, private configuration: ConfigI = config) {}
 
   write(): void {
     this.prepareMustacheInstance();
     console.group('Generating model files');
-    makeDir(this.outputFolders.MODELS);
+    makeDir(this.configuration.outputModelsPath);
 
     for (const model of this.store.models.models) {
       const exportFileName = `${model.fileName}.${this.exportExtension}`;
       console.info(model.name, '->', exportFileName);
       console.group();
       generateFileSync(
-        pathResolve(this.outputFolders.MODELS, exportFileName),
+        pathResolve(this.configuration.outputModelsPath, exportFileName),
         this.getGeneratedTemplate(model),
       );
       console.groupEnd();

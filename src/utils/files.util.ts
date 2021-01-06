@@ -1,8 +1,9 @@
-import { createWriteStream, readFileSync, writeFileSync } from 'fs';
+import { createWriteStream, readdirSync, readFileSync, writeFileSync } from 'fs';
 import * as http from 'http';
 import * as yaml from 'js-yaml';
 import { mkdirSync } from 'mkdir-recursive';
 import { basename, dirname, extname, resolve as pathResolve } from 'path';
+import { config } from '../models/config.model';
 
 const getExtensionRegex = /(\.[a-z0-9]+).*/i;
 
@@ -38,7 +39,7 @@ export async function downloadFile(url, dest): Promise<string> {
 }
 
 export function getTemplate(templateFile) {
-  const fullPath = pathResolve(__dirname, '..', '..', 'templates', templateFile);
+  const fullPath = pathResolve(config.templatePath, templateFile);
   return readFileSync(fullPath, 'utf-8');
 }
 
