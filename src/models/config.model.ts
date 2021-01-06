@@ -1,11 +1,13 @@
 import { existsSync } from 'fs';
 import { resolve as pathResolve } from 'path';
+import { TemplateConfigModel } from './template-config.model';
 
 export interface ConfigI {
   outputPath: string;
   exportPath: string;
   outputModelsPath: string;
   outputApisPath: string;
+  templateConfig: TemplateConfigModel;
 }
 
 class ConfigModel implements ConfigI {
@@ -16,6 +18,7 @@ class ConfigModel implements ConfigI {
 
   private _template: string;
   private _templatePath: string;
+  private _templateConfig: TemplateConfigModel;
 
   get outputPath(): string {
     return this._outputPath;
@@ -43,6 +46,7 @@ class ConfigModel implements ConfigI {
   set template(template: string) {
     this._template = template;
     this._templatePath = null;
+    this._templateConfig = null;
   }
 
   get templatePath(): string {
@@ -66,6 +70,13 @@ class ConfigModel implements ConfigI {
       throw `Template ${this.template} not exist`;
     }
     return this._templatePath;
+  }
+
+  get templateConfig(): TemplateConfigModel {
+    if (!this._templateConfig) {
+      this._templateConfig = new TemplateConfigModel(pathResolve(this.templatePath, 'config'));
+    }
+    return this._templateConfig;
   }
 
   constructor() {}

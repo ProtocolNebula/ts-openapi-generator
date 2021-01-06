@@ -12,8 +12,7 @@ import { generateFileSync, getTemplate, makeDir } from '../../utils/files.util';
 export class ApiWritterService {
   private mustacheTemplate;
 
-  private template = 'api.ts';
-  private exportExtension = 'ts';
+  private exportExtension;
 
   constructor(private store: StoreI, private configuration: ConfigI = config) {}
 
@@ -40,8 +39,9 @@ export class ApiWritterService {
   }
 
   private prepareMustacheInstance(): void {
-    this.mustacheTemplate = getTemplate(this.template);
+    this.mustacheTemplate = getTemplate(this.configuration.templateConfig.apiFile);
     mustache.parse(this.mustacheTemplate);
+    this.exportExtension = this.configuration.templateConfig.apiExtension;
   }
 
   private getGeneratedTemplate(groupName: string, apis: ApiModel[]): string {

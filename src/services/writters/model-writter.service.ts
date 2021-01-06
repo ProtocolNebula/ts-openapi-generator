@@ -14,9 +14,7 @@ export class ModelWritterService {
   private modelMustacheTemplate;
   private enumMustacheTemplate;
 
-  private modelTemplate = 'model.ts';
-  private enumTemplate = 'enumModel.ts';
-  private exportExtension = 'ts';
+  private exportExtension;
 
   constructor(private store: StoreI, private configuration: ConfigI = config) {}
 
@@ -40,10 +38,11 @@ export class ModelWritterService {
   }
 
   private prepareMustacheInstance(): void {
-    this.modelMustacheTemplate = getTemplate(this.modelTemplate);
+    this.modelMustacheTemplate = getTemplate(this.configuration.templateConfig.modelFile);
     mustache.parse(this.modelMustacheTemplate);
-    this.enumMustacheTemplate = getTemplate(this.enumTemplate);
+    this.enumMustacheTemplate = getTemplate(this.configuration.templateConfig.enumModelFile);
     mustache.parse(this.enumMustacheTemplate);
+    this.exportExtension = this.configuration.templateConfig.modelExtension;
   }
 
   private getGeneratedTemplate(model: ModelType): string {

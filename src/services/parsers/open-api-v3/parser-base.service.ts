@@ -125,7 +125,7 @@ export abstract class ParserBaseService {
       console.warn('WARNING: No schema defined! Any will be use instead');
       console.warn('TIP: Don\'t fill "content" for responses if void');
       const instance = new ModelAttributessModel(null);
-      instance.typeURI = 'any';
+      instance.typeURI = 'default';
       return instance;
     }
     if (this.isRefObject(schema)) {
@@ -227,9 +227,9 @@ export abstract class ParserBaseService {
         console.warn(
           `WARNING: ${attrName} not recognized OpenAPIV3 Schema type ${JSON.stringify(
             rawAttribute,
-          )}. Any will be used instead.`,
+          )}. DEFAULT will be used instead.`,
         );
-        attribute.typeURI = 'any';
+        attribute.typeURI = 'default';
       }
     }
   }

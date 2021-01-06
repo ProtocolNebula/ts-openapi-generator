@@ -1,4 +1,5 @@
 import { camel, capital } from 'case';
+import { getFixedTypeName } from '../utils/models.util';
 import { ModelStore } from '../stores/model.store';
 import { ApiURLModel } from './api-url.model';
 import { PhysycalFile } from './entities';
@@ -58,7 +59,7 @@ export class ApiModel implements PhysycalFile {
     return this.requestBody?.type;
   }
   get responseType(): string {
-    return this.response?.type || 'void';
+    return this.response?.type || getFixedTypeName('empty');
   }
 
   get verb(): string {
