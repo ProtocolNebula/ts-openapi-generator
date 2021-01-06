@@ -6,6 +6,12 @@ import { basename, dirname, extname, resolve as pathResolve } from 'path';
 
 const getExtensionRegex = /(\.[a-z0-9]+).*/i;
 
+export function getAllFoldersFrom(path) {
+  return readdirSync(path, { withFileTypes: true })
+    .filter(el => el.isDirectory())
+    .map(el => el.name);
+}
+
 export function makeDir(dest): void {
   mkdirSync(dest);
 }
