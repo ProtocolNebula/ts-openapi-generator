@@ -1,5 +1,6 @@
 import * as mustache from 'mustache';
 import { resolve as pathResolve } from 'path';
+import { config, ConfigI } from '../../models/config.model';
 import { EnumModel } from '../../models/enum.model';
 import { StoreI } from '../../stores/entities.store';
 import { ModelType } from '../../stores/model.store';
@@ -13,23 +14,21 @@ export class ModelWritterService {
   private modelMustacheTemplate;
   private enumMustacheTemplate;
 
-  private modelTemplate = 'model.ts';
-  private enumTemplate = 'enumModel.ts';
-  private exportExtension = 'ts';
+  private exportExtension;
 
-  constructor(private outputFolders: any, private store: StoreI) {}
+  constructor(private store: StoreI, private configuration: ConfigI = config) {}
 
   write(): void {
     this.prepareMustacheInstance();
     console.group('Generating model files');
-    makeDir(this.outputFolders.MODELS);
+    makeDir(this.configuration.outputModelsPath);
 
     for (const model of this.store.models.models) {
       const exportFileName = `${model.fileName}.${this.exportExtension}`;
       console.info(model.name, '->', exportFileName);
       console.group();
       generateFileSync(
-        pathResolve(this.outputFolders.MODELS, exportFileName),
+        pathResolve(this.configuration.outputModelsPath, exportFileName),
         this.getGeneratedTemplate(model),
       );
       console.groupEnd();
@@ -39,10 +38,11 @@ export class ModelWritterService {
   }
 
   private prepareMustacheInstance(): void {
-    this.modelMustacheTemplate = getTemplate(this.modelTemplate);
+    this.modelMustacheTemplate = getTemplate(this.configuration.templateConfig.modelFile);
     mustache.parse(this.modelMustacheTemplate);
-    this.enumMustacheTemplate = getTemplate(this.enumTemplate);
+    this.enumMustacheTemplate = getTemplate(this.configuration.templateConfig.enumModelFile);
     mustache.parse(this.enumMustacheTemplate);
+    this.exportExtension = this.configuration.templateConfig.modelExtension;
   }
 
   private getGeneratedTemplate(model: ModelType): string {

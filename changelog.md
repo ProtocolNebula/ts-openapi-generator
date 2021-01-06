@@ -6,6 +6,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- Issue #3 - Custom templates: Now you can create a custom template and use it without modify the source code.
+- Issue #6 - Custom enums mapping: As part of a template, enums are configurable.
+- Issue #7 - Default templates support. Now current template is named `angular2`, so you must to add `-t angular2` to you `cli script`
+```bash
+transform-swagger -f ...json -o src/generatedApi/ -t angular2
+```
+- `ConfigModel` class
+- `TemplateConfigModel` class
+
+### Changed
+- Output folders now are retrieved from ConfigModel.
+- Now `template` is required as parameter.
+- Default type added.
+- `Yargs` (arguments) are not read directly, are parsed to `ConfigModel`.
 
 ## [2.1.3] - 2021-01-05
 

@@ -1,5 +1,5 @@
 import * as fs from 'fs-extra';
-import * as path from 'path';
+import { config } from './models/config.model';
 import { argumentsInstance } from './services/arguments.service';
 import { FileReaderService } from './services/parsers/file-reader.service';
 import { APIParserService } from './services/parsers/open-api-v3/api-parser.service';
@@ -8,36 +8,34 @@ import { ApiWritterService } from './services/writters/api-writter.service';
 import { ModelWritterService } from './services/writters/model-writter.service';
 import { Store } from './stores/entities.store';
 
+config.parseYargs(argumentsInstance);
+
 // FOLDERS INFORMATION
-const OUTPUT_PATH = argumentsInstance.outputFolder + path.sep;
-
-const GENERATED_FOLDER = OUTPUT_PATH + 'generated' + path.sep;
-const OUTPUT_FOLDERS = {
-  OUTPUT_PATH: OUTPUT_PATH,
-  BASE_FOLDER: GENERATED_FOLDER,
-  MODELS: GENERATED_FOLDER + 'models',
-  APIS: GENERATED_FOLDER + 'api',
-};
 console.info('Output folders:');
-console.table(OUTPUT_FOLDERS);
-
-console.log('');
-if (argumentsInstance.clean) {
-  console.log('Removing previously generated data...');
-  fs.removeSync(GENERATED_FOLDER);
-} else {
-  console.log('no-clean flag recevived, clean folder skipped');
-}
-console.log('');
+console.table({
+  OUTPUT_PATH: config.outputPath,
+  BASE_FOLDER: config.exportPath,
+  MODELS: config.exportPath,
+  APIS: config.exportPath,
+});
 
 // Read the file
 async function run() {
   try {
+    // Check if the template does not exist
+    config.templatePath;
+
+    console.log('');
+    if (argumentsInstance.clean) {
+      console.log('Removing previously generated data...');
+      fs.removeSync(config.exportPath);
+    } else {
+      console.log('no-clean flag recevived, clean folder skipped');
+    }
+    console.log('');
+
     console.log('Opening file:', argumentsInstance.file);
-    const fileParser = new FileReaderService(
-      argumentsInstance.file,
-      OUTPUT_FOLDERS,
-    );
+    const fileParser = new FileReaderService(argumentsInstance.file, config);
     console.log('Parsing file...');
     console.log('');
     const documentParsed = await fileParser.readFile();
@@ -51,9 +49,9 @@ async function run() {
 
     console.info('');
     console.info('Generating files');
-    const modelWritter = new ModelWritterService(OUTPUT_FOLDERS, Store);
+    const modelWritter = new ModelWritterService(Store, config);
     modelWritter.write();
-    const apiWritter = new ApiWritterService(OUTPUT_FOLDERS, Store);
+    const apiWritter = new ApiWritterService(Store, config);
     apiWritter.write();
     console.info('Files generation finished');
 

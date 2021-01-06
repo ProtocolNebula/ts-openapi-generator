@@ -33,7 +33,7 @@ Is recommended to add a script to your `package.json` or package manager that yo
 > Change `src/generatedApi` by your desired folder to generate the code.
 
 ```bash
-transform-swagger -f URI/TO/SWAGGER/JSON/OR/YAML -o src/generatedApi/
+transform-swagger -f URI/TO/SWAGGER/JSON/OR/YAML -o src/generatedApi/ -t angular2
 ```
 
 ### Main CLI commands
@@ -42,17 +42,19 @@ transform-swagger -f URI/TO/SWAGGER/JSON/OR/YAML -o src/generatedApi/
 Usage: transform-swagger [options]
 
 Options:
-  --version            Show version number                             [boolean]
+  --version, -v        Show version number                         [boolean]
   --clean              No clean the output-folder, so old files will remain
-                                                       [boolean] [default: true]
-  -f, --file           Path OR URL to the swagger document to parse   [required]
+                                                   [boolean] [default: true]
+  -f, --file           Path OR URL to the swagger document to parse
+                                                                  [required]
   -o, --output-folder  Specify the output folder (generated folders will be
-                       replaced)                             [default: "output"]
-  -h, --help           Show help                                       [boolean]
+                       replaced)                         [default: "output"]
+  -t, --template       Template (preset) name or path to a template
+  -h, --help           Show help                                   [boolean]
 
 Examples:
-  transform-swagger -f swagger.js  Convert a Swagger JSON file to
-                                   compatible-angular API
+  transform-swagger -f swagger.js -o      Convert a Swagger JSON file to
+  api/ -t angular2                        compatible-angular API
 ```
 
 ## Development
@@ -71,6 +73,6 @@ npm run start:dev -- -f URL_TO_SWAGGER.JSON/YAML
 > You can re-use the downloaded file or specify another folder
 
 ```
-npm run start:dev -- -f output/temp.json
+npm run start:dev -- -f output/temp.json -o src/generatedApi/ -t angular2
 ```
 

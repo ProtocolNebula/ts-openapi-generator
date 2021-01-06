@@ -1,6 +1,7 @@
 import * as mustache from 'mustache';
 import { resolve as pathResolve } from 'path';
-import { ApiModel } from 'src/models/api.model';
+import { ApiModel } from '../../models/api.model';
+import { config, ConfigI } from '../../models/config.model';
 import { StoreI } from '../../stores/entities.store';
 import { generateFileSync, getTemplate, makeDir } from '../../utils/files.util';
 
@@ -11,15 +12,14 @@ import { generateFileSync, getTemplate, makeDir } from '../../utils/files.util';
 export class ApiWritterService {
   private mustacheTemplate;
 
-  private template = 'api.ts';
-  private exportExtension = 'ts';
+  private exportExtension;
 
-  constructor(private outputFolders: any, private store: StoreI) {}
+  constructor(private store: StoreI, private configuration: ConfigI = config) {}
 
   write(): void {
     this.prepareMustacheInstance();
     console.group('Generating api files');
-    const folder = this.outputFolders.APIS;
+    const folder = this.configuration.outputApisPath;
     makeDir(folder);
 
     const groups = this.store.apis.sort().apisGrouped;
@@ -39,8 +39,9 @@ export class ApiWritterService {
   }
 
   private prepareMustacheInstance(): void {
-    this.mustacheTemplate = getTemplate(this.template);
+    this.mustacheTemplate = getTemplate(this.configuration.templateConfig.apiFile);
     mustache.parse(this.mustacheTemplate);
+    this.exportExtension = this.configuration.templateConfig.apiExtension;
   }
 
   private getGeneratedTemplate(groupName: string, apis: ApiModel[]): string {

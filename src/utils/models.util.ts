@@ -1,45 +1,30 @@
 import { capital } from 'case';
 import { ApiModel } from '../models/api.model';
+import { config } from '../models/config.model';
 import { PhysycalFile } from '../models/entities';
 import { Store } from '../stores/entities.store';
 
 export function getFixedTypeName(type: string): string {
-  let parsedTypes = {
-    '': 'any',
-    any: 'any',
-    array: 'any[]',
-    bool: 'boolean',
-    boolean: 'boolean',
-    double: 'number',
-    empty: 'void',
-    file: 'File',
-    float: 'number',
-    integer: 'number',
-    number: 'number',
-    object: 'any',
-    string: 'string',
-    undefined: 'any',
-    void: 'void',
-  };
+  const typesMapped = config.templateConfig.typesMapped;
 
-  let newType = parsedTypes[type];
+  let newType = typesMapped[type];
   if (newType !== undefined) {
     if (newType !== type) {
       console.debug('Type', type, 'changed to', newType);
     }
-    return parsedTypes[type];
+    return typesMapped[type];
   }
 
   if (type.indexOf('#/') === 0) {
     if (Store.models.getByUri(type)) {
       newType = type.substring(type.lastIndexOf('/') + 1);
     } else {
-      newType = 'any';
-      console.error('ERROR: Type', type, 'not defined. Any will be used.');
+      newType = typesMapped.default;
+      console.error(`ERROR: Type ${type}, not defined. ${newType} will be used.`);
     }
   } else {
-    newType = 'any';
-    console.warn('WARNING: Type', type, 'not defined. Any will be used.');
+    newType = typesMapped.default;
+    console.warn(`WARNING: Type ${type}, not defined. ${newType} will be used.`);
   }
 
   return newType;

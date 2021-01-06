@@ -5,15 +5,20 @@ export const argumentsInstance = yargs
   .usage('Usage: $0 [options]')
   // .command('count', 'Count the lines in a file')
   .example(
-    '$0 -f swagger.js',
+    '$0 -f swagger.js -o api/ -t angular2',
     'Convert a Swagger JSON file to compatible-angular API',
   )
-  .alias('f', 'file')
   .nargs('file', 1)
+  .alias('f', 'file')
   .describe('file', 'Path OR URL to the swagger document to parse')
   .demandOption(['file'])
   .alias('o', 'output-folder')
   .nargs('output-folder', 1)
+  .nargs('template', 1)
+  .alias('t', 'template')
+  .describe('template', 'Template (preset) name or path to a template')
+  .implies('file', 'output-folder')
+  .implies('file', 'template')
   .describe(
     'output-folder',
     'Specify the output folder (generated folders will be replaced)',
@@ -24,4 +29,5 @@ export const argumentsInstance = yargs
   .default('clean', true)
   .help('help')
   .alias('h', 'help')
-  .epilog('copyright 2020').argv;
+  .epilog('For more info visit: https://github.com/ProtocolNebula/ts-openapi-generator/')
+  .argv;
