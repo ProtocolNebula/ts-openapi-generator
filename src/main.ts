@@ -19,18 +19,21 @@ console.table({
   APIS: config.exportPath,
 });
 
-console.log('');
-if (argumentsInstance.clean) {
-  console.log('Removing previously generated data...');
-  fs.removeSync(config.exportPath);
-} else {
-  console.log('no-clean flag recevived, clean folder skipped');
-}
-console.log('');
-
 // Read the file
 async function run() {
   try {
+    // Check if the template does not exist
+    config.templatePath;
+
+    console.log('');
+    if (argumentsInstance.clean) {
+      console.log('Removing previously generated data...');
+      fs.removeSync(config.exportPath);
+    } else {
+      console.log('no-clean flag recevived, clean folder skipped');
+    }
+    console.log('');
+
     console.log('Opening file:', argumentsInstance.file);
     const fileParser = new FileReaderService(argumentsInstance.file, config);
     console.log('Parsing file...');
