@@ -1,5 +1,18 @@
 # TypeScript OpenApi/Swagger Generator - Templates
 
+- [TypeScript OpenApi/Swagger Generator - Templates](#typescript-openapiswagger-generator---templates)
+  - [Details](#details)
+  - [How to create a custom template](#how-to-create-a-custom-template)
+    - [1 - Duplicate any template folder](#1---duplicate-any-template-folder)
+    - [2 - Customize your template](#2---customize-your-template)
+    - [3 - Generate the api files with your own template](#3---generate-the-api-files-with-your-own-template)
+    - [4 - Just enjoy your saved time!](#4---just-enjoy-your-saved-time)
+  - [File naming (for each template)](#file-naming-for-each-template)
+    - [config.js](#configjs)
+    - [api.?](#api)
+    - [model.?](#model)
+    - [enumModel.?](#enummodel)
+
 ## Details
 
 This folder contain a list of presets for different languages.

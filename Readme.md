@@ -1,5 +1,15 @@
 # TypeScript OpenApi/Swagger Generator
 
+- [TypeScript OpenApi/Swagger Generator](#typescript-openapiswagger-generator)
+  - [Description](#description)
+  - [Installation](#installation)
+  - [Usage](#usage)
+    - [The script](#the-script)
+    - [Main CLI commands](#main-cli-commands)
+  - [Development](#development)
+    - [Run with watch (internet file)](#run-with-watch-internet-file)
+    - [Run with watch (local file)](#run-with-watch-local-file)
+
 ## Description
 
 This script is written in `TypeScript`, it can generate all `Models` and `APIs` (serivces) in any kind of language.
