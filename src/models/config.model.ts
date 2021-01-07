@@ -12,7 +12,7 @@ export interface ConfigI {
 
 class ConfigModel implements ConfigI {
   private _outputPath: string;
-  private _outputBaseFolder: string = 'generated';
+  private _outputBaseFolder: string = '';
   private _outputModelsFolder: string = 'models';
   private _outputApisFolder: string = 'apis';
 
