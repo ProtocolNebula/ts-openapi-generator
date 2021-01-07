@@ -32,7 +32,9 @@ export class {{ name }} {
   {{/deprecated}}
    */
   {{/hasComments}}
-  {{name}}{{#isOptional}}?{{/isOptional}}: {{type}}{{#isArray}}[]{{/isArray}}{{#default}} = {{default}}{{/default}};
+  {{name}}{{#isOptional}}?{{/isOptional}}: {{type}}{{#isArray
+  }}{{#arrayLevelsRepeater}}[]{{/arrayLevelsRepeater}}{{
+  /isArray}}{{#default}} = {{default}}{{/default}};
 
   {{/attributes}}
 }

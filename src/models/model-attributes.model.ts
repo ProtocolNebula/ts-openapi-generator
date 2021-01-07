@@ -10,6 +10,11 @@ export class ModelAttributessModel {
   isOptional: boolean = true;
   isArray: boolean;
 
+  /**
+   * Must be increased for each array level
+   */
+  arrayLevels: number = 0;
+
   private _typeURI;
   private _model: ModelModel;
 
@@ -43,6 +48,14 @@ export class ModelAttributessModel {
   }
   set model(model: ModelModel) {
     this._model = model;
+  }
+
+
+  /**
+   * Return a fake array with "arrayLevels" elements to print it in mustache.js
+   */
+  get arrayLevelsRepeater(): any[] {
+    return new Array(this.arrayLevels).fill(true);
   }
 
   constructor(name: string) {

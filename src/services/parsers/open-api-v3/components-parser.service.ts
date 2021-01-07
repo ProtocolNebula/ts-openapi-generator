@@ -39,6 +39,9 @@ export class ComponentsParserService extends ParserBaseService {
         this.modelStore.add(enumInstance);
       } else {
         console.error(`ERROR: ${modelName} not a correct Schema`);
+        if ((rawModel as any)?.type === 'array') {
+          console.error(`ERROR: ARRAY not supported on COMPONENTS SCHEMA`);
+        }
       }
 
       if (elementRef) {

@@ -209,6 +209,7 @@ export abstract class ParserBaseService {
         if (rawAttribute.type === 'array') {
           console.group(`${attrName} is an array`);
           attribute.isArray = true;
+          attribute.arrayLevels++;
           this.fillAttribute(attribute, rawAttribute.items, defaultName);
           console.groupEnd();
         } else if (rawAttribute.enum) {
