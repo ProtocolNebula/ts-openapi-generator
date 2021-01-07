@@ -1,0 +1,2206 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "PasaporteEscapeRoom API",
+    "description": "API to consume PasaporteEscapeRoom services",
+    "termsOfService": "https://pasaporteescaperoom.com/site/apartados/textos/aviso_legal_3_es.html",
+    "contact": {
+      "name": "PasaporteEscaepRoom Developers Support",
+      "url": "https://pasaporteescaperoom.com/es/contacto",
+      "email": "info@pasaporteescaperoom.com"
+    },
+    "version": "1.5.2"
+  },
+  "servers": [
+    {
+      "url": "api.dev.pasaporteescaperoom.com/v1",
+      "description": "Development API"
+    },
+    {
+      "url": "api.pasaporteescaperoom.com/v1",
+      "description": "Production API"
+    },
+    {
+      "url": "localhost/pasaporte/api/v1",
+      "description": "LocalHost Development API (only for maintainers)"
+    }
+  ],
+  "paths": {
+    "/auth/login": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Login user endpoint",
+        "operationId": "login",
+        "requestBody": {
+          "description": "User auth data",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginRequest"
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Login Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserAuthResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing fields or login incorrect"
+          },
+          "403": {
+            "description": "User is not activate or is a Room Owner"
+          }
+        }
+      }
+    },
+    "/auth/profile": {
+      "get": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Retrieve login user info response",
+        "operationId": "getUserProfile",
+        "responses": {
+          "200": {
+            "description": "User data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserAuthResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid token"
+          },
+          "403": {
+            "description": "User is not activate or is a Room Owner"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/auth/social": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Login with Social Networks",
+        "operationId": "socialLogin",
+        "requestBody": {
+          "description": "User and social network user data",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SocialLoginRequest"
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/SocialLoginRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Login Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserAuthResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing fields or login incorrect"
+          },
+          "403": {
+            "description": "User is not activate or is a Room Owner"
+          }
+        }
+      }
+    },
+    "/private/booking/manage/availability/listDefault": {
+      "post": {
+        "tags": [
+          "BookingManageAvailability"
+        ],
+        "summary": "Default List of available rooms",
+        "operationId": "listDefault",
+        "requestBody": {
+          "description": "Booking Default List information data",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ListDefaultBookingRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Default List Response, 0 = Sunday, 6 = Saturday",
+            "content": {
+              "application/json": {}
+            }
+          },
+          "401": {
+            "description": "Invalid token"
+          },
+          "403": {
+            "description": "You're not the room owner."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/private/booking/manage/roomPrices/delete": {
+      "post": {
+        "tags": [
+          "BookingManageRoomPrices"
+        ],
+        "summary": "Delete",
+        "operationId": "delete",
+        "requestBody": {
+          "description": "Delete room prices",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeleteBookingRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Missing fields"
+          },
+          "401": {
+            "description": "Invalid token"
+          },
+          "403": {
+            "description": "You're not the room owner."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/private/booking/manage/availability/saveDefault": {
+      "post": {
+        "tags": [
+          "BookingManageAvailability"
+        ],
+        "summary": "Save the available rooms",
+        "operationId": "saveDefault",
+        "requestBody": {
+          "description": "Save Booking information data",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SaveDefaultBookingRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Save Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RoomPriceSectionDTO"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid token"
+          },
+          "403": {
+            "description": "You're not the room owner."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/private/booking/manage/book": {
+      "post": {
+        "tags": [
+          "BookingManage"
+        ],
+        "summary": "Books a new Booking",
+        "operationId": "book",
+        "requestBody": {
+          "description": "Booking information data",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BookBookingRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Creation Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BookingRoomsDTO"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing fields"
+          },
+          "401": {
+            "description": "Invalid api token"
+          },
+          "403": {
+            "description": "You have no permission to book this."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/private/booking/manage/cancel": {
+      "post": {
+        "tags": [
+          "BookingManage"
+        ],
+        "summary": "Cancel a Booking",
+        "operationId": "cancel",
+        "requestBody": {
+          "description": "Cancel Booking information data",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CancelBookingRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Cancelation Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BookingRoomsDTO"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid token"
+          },
+          "403": {
+            "description": "No booking made or booking is already validated."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/private/booking/manage/discounts/create": {
+      "post": {
+        "tags": [
+          "BookingManageDiscounts"
+        ],
+        "summary": "Creates a new Discount",
+        "operationId": "create",
+        "requestBody": {
+          "description": "Booking Create",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateDiscountBookingRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Missing fields"
+          },
+          "401": {
+            "description": "Invalid api token"
+          },
+          "403": {
+            "description": "You have no permission to create this."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/private/booking/manage/discounts/": {
+      "post": {
+        "tags": [
+          "BookingManageDiscounts"
+        ],
+        "summary": "Gets Discounts",
+        "operationId": "getDiscount",
+        "requestBody": {
+          "description": "Gets Discounts",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetDiscountBookingRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Get Discount Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BookingElementsWithDiscount"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing fields"
+          },
+          "401": {
+            "description": "Invalid api token"
+          },
+          "403": {
+            "description": "You have no permission to create this."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/private/booking/manage/discounts/remove": {
+      "post": {
+        "tags": [
+          "BookingManageDiscounts"
+        ],
+        "summary": "Removes a Discount",
+        "operationId": "remove",
+        "requestBody": {
+          "description": "Booking Remove",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RemoveDiscountBookingRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Missing fields"
+          },
+          "401": {
+            "description": "Invalid api token"
+          },
+          "403": {
+            "description": "You have no permission to create this."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/private/booking/manage/fill": {
+      "post": {
+        "tags": [
+          "FillingManage"
+        ],
+        "summary": "Fills days",
+        "operationId": "fill",
+        "requestBody": {
+          "description": "Fill function",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FillRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Creation Response"
+          },
+          "400": {
+            "description": "Missing fields"
+          },
+          "401": {
+            "description": "Invalid api token"
+          },
+          "403": {
+            "description": "You have no permission to fill."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/private/booking/manage/list": {
+      "post": {
+        "tags": [
+          "BookingManage"
+        ],
+        "summary": "List a Booking",
+        "operationId": "list",
+        "requestBody": {
+          "description": "Booking List information data",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ListBookingRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Booking List",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BookingRoomsDTO"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Wrong data"
+          },
+          "401": {
+            "description": "Invalid token"
+          },
+          "403": {
+            "description": "You're not the room owner."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/private/booking/manage/roomPrices/create": {
+      "post": {
+        "tags": [
+          "BookingManageRoomPrices"
+        ],
+        "summary": "List of room prices from Bookings",
+        "operationId": "create",
+        "requestBody": {
+          "description": "Booking List Create Section",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateSectionsBookingRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Room price section details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RoomPriceSectionDTO"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid token"
+          },
+          "403": {
+            "description": "You're not the room owner."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/private/booking/manage/roomPrices/": {
+      "post": {
+        "tags": [
+          "BookingManageRoomPrices"
+        ],
+        "summary": "Get Sections",
+        "operationId": "getSection",
+        "requestBody": {
+          "description": "Get Sections for room prices when booking",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetSectionsBookingRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Room price section details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RoomPriceSectionDTO"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing fields"
+          },
+          "401": {
+            "description": "Invalid token"
+          },
+          "403": {
+            "description": "You're not the room owner."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/private/booking/manage/roomPrices/listSection": {
+      "post": {
+        "tags": [
+          "BookingManageRoomPrices"
+        ],
+        "summary": "List of room prices from Bookings",
+        "operationId": "listSection",
+        "requestBody": {
+          "description": "Booking List Section information data",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ListSectionsBookingRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "List of prices for a section",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RoomsPricesDTO"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid token"
+          },
+          "403": {
+            "description": "You're not the room owner."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/private/booking/manage/roomPrices/update": {
+      "post": {
+        "tags": [
+          "BookingManageRoomPrices"
+        ],
+        "summary": "List of room prices from Bookings",
+        "operationId": "update",
+        "requestBody": {
+          "description": "Update",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateSectionsBookingRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "401": {
+            "description": "Invalid token"
+          },
+          "403": {
+            "description": "You're not the room owner."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/private/booking/manage/status": {
+      "post": {
+        "tags": [
+          "BookingManage"
+        ],
+        "summary": "Status of a Booking",
+        "operationId": "status",
+        "requestBody": {
+          "description": "Status of a Booking data",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StatusBookingRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Status Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BookingRoomsDTO"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid token"
+          },
+          "403": {
+            "description": "No booking made or booking is already validated."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/private/direction/country_list": {
+      "get": {
+        "tags": [
+          "Direction"
+        ],
+        "summary": "Retrieve all available countries",
+        "operationId": "getCountries",
+        "responses": {
+          "200": {
+            "description": "Country list",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CountryDTO"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid token"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/private/direction/province_list": {
+      "get": {
+        "tags": [
+          "Direction"
+        ],
+        "summary": "Retrieve all Country provinces",
+        "operationId": "getProvincesByCountry",
+        "parameters": [
+          {
+            "name": "country",
+            "in": "query",
+            "description": "Status values that need to be considered for filter",
+            "required": true,
+            "style": "form",
+            "schema": {
+              "type": "number",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Province list",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProvinceDTO"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid token"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/private/game/cancel": {
+      "post": {
+        "tags": [
+          "Game"
+        ],
+        "summary": "Stop a game that is not validated yet",
+        "operationId": "cancel",
+        "responses": {
+          "200": {
+            "description": "User data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameStatusResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid token"
+          },
+          "403": {
+            "description": "No game started or game is already validated."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/private/game/rate": {
+      "post": {
+        "tags": [
+          "Game"
+        ],
+        "summary": "Send a rating to the room and finalize the game.",
+        "operationId": "rateRoom",
+        "requestBody": {
+          "description": "Room information data",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RateGameRequest"
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/RateGameRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameStatusResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid token"
+          },
+          "403": {
+            "description": "No game started or finalized"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/private/game/start": {
+      "post": {
+        "tags": [
+          "Game"
+        ],
+        "summary": "Start a new game",
+        "operationId": "start",
+        "requestBody": {
+          "description": "Room information data",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StartGameRequest"
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/StartGameRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameStatusResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing fields"
+          },
+          "401": {
+            "description": "Invalid token"
+          },
+          "403": {
+            "description": "User is not player or a game is already started."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/private/game/status": {
+      "get": {
+        "tags": [
+          "Game"
+        ],
+        "summary": "Get the active game status",
+        "operationId": "getStatus",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "(Optional) Game ID, if not specified will return info about active game.",
+            "required": false,
+            "style": "form",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameStatusResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid token"
+          },
+          "403": {
+            "description": "User is not player or game not exist."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/private/game/validate": {
+      "post": {
+        "tags": [
+          "Game"
+        ],
+        "summary": "Set game as completed with passport code",
+        "operationId": "validate",
+        "requestBody": {
+          "description": "Room information data",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ValidateGameRequest"
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/ValidateGameRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameStatusResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing fields"
+          },
+          "401": {
+            "description": "Invalid token"
+          },
+          "403": {
+            "description": "No game started or incorrect data."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/private/owner/rooms/list": {
+      "post": {
+        "tags": [
+          "OwnerRooms"
+        ],
+        "summary": "List all rooms of an authenticated owner",
+        "operationId": "list",
+        "requestBody": {
+          "description": "Booking List information data",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ListRoomsRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "List Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RoomEscapeDTO"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid token"
+          },
+          "403": {
+            "description": "You're not the room owner."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/private/search/rooms": {
+      "get": {
+        "tags": [
+          "Search"
+        ],
+        "summary": "Search for room escapes without pagination, return maximum 15 records",
+        "operationId": "searchRooms",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "description": "At least 4 characters",
+            "required": true,
+            "style": "form",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "country",
+            "in": "query",
+            "description": "ID of country",
+            "required": false,
+            "style": "form",
+            "schema": {
+              "type": "number",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "province",
+            "in": "query",
+            "description": "ID of province (will ignore country)",
+            "required": false,
+            "style": "form",
+            "schema": {
+              "type": "number",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Escape rooms list",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RoomEscapeDTO"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid data"
+          },
+          "401": {
+            "description": "Invalid token"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/private/search/users": {
+      "get": {
+        "tags": [
+          "Search"
+        ],
+        "summary": "Search for users without pagination, return maximum 20 records",
+        "operationId": "searchUsers",
+        "parameters": [
+          {
+            "name": "nickname",
+            "in": "query",
+            "description": "User nickname to find, at least 2 characters",
+            "required": true,
+            "style": "form",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Users list",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UserSearchResultDTO"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid data"
+          },
+          "401": {
+            "description": "Invalid token"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "UserAuthResponse": {
+        "properties": {
+          "user": {
+            "$ref": "#/components/schemas/UserDTO"
+          },
+          "profile": {
+            "$ref": "#/components/schemas/UserProfileDTO"
+          },
+          "ranking": {
+            "$ref": "#/components/schemas/UserRankingDTO"
+          },
+          "direction": {
+            "$ref": "#/components/schemas/UserDirectionDTO"
+          },
+          "token": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "LoginRequest": {
+        "properties": {
+          "user": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "SocialLoginRequest": {
+        "properties": {
+          "user": {
+            "type": "string"
+          },
+          "network": {
+            "description": "Social network name: facebook",
+            "type": "string"
+          },
+          "token": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "AskForPlayerResponse": {
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "owner_id": {
+            "description": "User ID that generate the request",
+            "type": "string"
+          },
+          "status": {
+            "$ref": "#/components/schemas/AskForPlayerStatusENUM"
+          },
+          "message": {
+            "description": "Action response message",
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "AskForPlayerStatusENUM": {
+        "type": "string",
+        "enum": [
+          "CANCELLED",
+          "PENDING",
+          "END"
+        ]
+      },
+      "AskForPlayerList": {
+        "$ref": "#/components/schemas/AskForPlayerDTO"
+      },
+      "AskForPlayersRequest": {
+        "properties": {
+          "room_id": {
+            "type": "string"
+          },
+          "room_name": {
+            "description": "Only if not room_id specified",
+            "type": "string"
+          },
+          "id_province": {
+            "description": "Only if no room_id specified",
+            "type": "string"
+          },
+          "day": {
+            "description": "YYYY-MM-DD",
+            "type": "string"
+          },
+          "hour": {
+            "description": "HH:mm",
+            "type": "string"
+          },
+          "num_request_players": {
+            "description": "Max quantity of players to accept",
+            "type": "number"
+          },
+          "description": {
+            "description": "Optional, extra information about request",
+            "type": "number"
+          }
+        },
+        "type": "object"
+      },
+      "AskForPlayersEndRequest": {
+        "properties": {
+          "id": {
+            "description": "Request ID",
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "ListDefaultBookingRequest": {
+        "properties": {
+          "auth": {
+            "$ref": "#/components/schemas/RoomApiAuth"
+          }
+        },
+        "type": "object"
+      },
+      "SaveDefaultBookingRequest": {
+        "properties": {
+          "auth": {
+            "$ref": "#/components/schemas/RoomApiAuth"
+          },
+          "availability": {
+            "description": "Day room availability",
+            "type": "array",
+            "items": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/RoomsAvailabilityDefaultDTO"
+              }
+            }
+          }
+        },
+        "type": "object"
+      },
+      "RoomReservationInfoRequest": {
+        "properties": {
+          "date": {
+            "description": "Date of the Booking",
+            "type": "string"
+          },
+          "time": {
+            "description": "Time of the Booking",
+            "type": "string"
+          },
+          "players": {
+            "description": "City of the room",
+            "type": "number"
+          },
+          "price": {
+            "description": "City of the room",
+            "type": "number"
+          }
+        },
+        "type": "object"
+      },
+      "BookBookingRequest": {
+        "properties": {
+          "auth": {
+            "$ref": "#/components/schemas/RoomApiAuth"
+          },
+          "reservation_info": {
+            "$ref": "#/components/schemas/RoomReservationInfoRequest"
+          }
+        },
+        "type": "object"
+      },
+      "BookingStatusResponse": {
+        "properties": {
+          "id": {
+            "description": "Booking ID",
+            "type": "number"
+          },
+          "room_id": {
+            "description": "Room id if any",
+            "type": "number"
+          },
+          "date": {
+            "description": "Day and Time of Booking",
+            "type": "string"
+          },
+          "user_id": {
+            "description": "User id if any",
+            "type": "number"
+          },
+          "status": {
+            "description": "Status of Booking",
+            "type": "BookingStatus"
+          },
+          "price": {
+            "description": "Price",
+            "type": "number"
+          },
+          "players": {
+            "description": "Number of Players",
+            "type": "number"
+          },
+          "comission_percentage": {
+            "description": "Percentage of comission",
+            "type": "number"
+          }
+        },
+        "type": "object"
+      },
+      "BookingStatusENUM": {
+        "type": "string",
+        "enum": [
+          "PENDING",
+          "ACCEPTED",
+          "SUCCESS",
+          "CANCELLED"
+        ]
+      },
+      "RoomApiAuth": {
+        "properties": {
+          "owner_key": {
+            "description": "Private api key for the Owner",
+            "type": "string"
+          },
+          "room_key": {
+            "description": "Private api key for the Room",
+            "type": "string"
+          },
+          "room_id": {
+            "description": "If no room key specified, this will be used",
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "AvailableDays": {
+        "properties": {
+          "day": {
+            "description": "Day. dd",
+            "type": "string"
+          },
+          "is_available": {
+            "description": "Shows if available or not",
+            "type": "boolean"
+          }
+        },
+        "type": "object"
+      },
+      "AvailableHours": {
+        "properties": {
+          "hour": {
+            "description": "Hour. hh:mm",
+            "type": "string"
+          },
+          "is_available": {
+            "description": "Shows if available or not",
+            "type": "boolean"
+          }
+        },
+        "type": "object"
+      },
+      "BookingElementsHolidays": {
+        "properties": {
+          "id": {
+            "description": "Id",
+            "type": "number"
+          },
+          "datetime": {
+            "description": "Date time",
+            "type": "string"
+          },
+          "status": {
+            "description": "Status",
+            "type": "number"
+          }
+        },
+        "type": "object"
+      },
+      "BookingElementsWithDiscount": {
+        "properties": {
+          "id": {
+            "description": "Id",
+            "type": "number"
+          },
+          "datetime": {
+            "description": "Date time",
+            "type": "string"
+          },
+          "status": {
+            "description": "Status",
+            "type": "number"
+          },
+          "discount_percent": {
+            "description": "Number for the discount",
+            "type": "number"
+          }
+        },
+        "type": "object"
+      },
+      "CancelBookingRequest": {
+        "properties": {
+          "auth": {
+            "$ref": "#/components/schemas/RoomApiAuth"
+          },
+          "booking_id": {
+            "description": "Booking Id",
+            "type": "string"
+          },
+          "do_reimbursment": {
+            "description": "If has to do Reimbursment",
+            "type": "boolean"
+          }
+        },
+        "type": "object"
+      },
+      "CreateDiscountBookingRequest": {
+        "properties": {
+          "auth": {
+            "$ref": "#/components/schemas/RoomApiAuth"
+          },
+          "discount_percentage": {
+            "description": "Discount Percentage",
+            "type": "number"
+          },
+          "from_date": {
+            "description": "From which Date",
+            "type": "string"
+          },
+          "from_hour": {
+            "description": "From which Hour",
+            "type": "string"
+          },
+          "to_date": {
+            "description": "To which Date",
+            "type": "string"
+          },
+          "to_hour": {
+            "description": "To which Hour",
+            "type": "string"
+          },
+          "affected_weekdays": {
+            "description": "Affected Weekdays",
+            "type": "array",
+            "items": {
+              "description": "Affected WeekDays, 0 = Sunday & 6 = Saturday",
+              "type": "number"
+            }
+          },
+          "replace_existing": {
+            "description": "Replace Existing",
+            "type": "boolean"
+          }
+        },
+        "type": "object"
+      },
+      "GetDiscountBookingRequest": {
+        "properties": {
+          "auth": {
+            "$ref": "#/components/schemas/RoomApiAuth"
+          },
+          "from_id": {
+            "description": "From Id",
+            "type": "number"
+          }
+        },
+        "type": "object"
+      },
+      "RemoveDiscountBookingRequest": {
+        "properties": {
+          "auth": {
+            "$ref": "#/components/schemas/RoomApiAuth"
+          },
+          "reservation_ids": {
+            "description": "Reservation Ids",
+            "type": "array",
+            "items": {
+              "description": "Reservation Id",
+              "type": "number"
+            }
+          }
+        },
+        "type": "object"
+      },
+      "FillRoomReservationRequest": {
+        "properties": {
+          "days": {
+            "description": "Number of days to fill",
+            "type": "number"
+          }
+        },
+        "type": "object"
+      },
+      "FillRequest": {
+        "properties": {
+          "auth": {
+            "$ref": "#/components/schemas/RoomApiAuth"
+          },
+          "reservation_info": {
+            "$ref": "#/components/schemas/FillRoomReservationRequest"
+          }
+        },
+        "type": "object"
+      },
+      "ListBookingRequest": {
+        "required": [
+          "auth",
+          "year",
+          "month"
+        ],
+        "properties": {
+          "auth": {
+            "$ref": "#/components/schemas/RoomApiAuth"
+          },
+          "year": {
+            "description": "Year",
+            "type": "string"
+          },
+          "month": {
+            "description": "Month",
+            "type": "string"
+          },
+          "day": {
+            "description": "Day",
+            "type": "string"
+          },
+          "show": {
+            "description": "Show only with status",
+            "type": "string",
+            "enum": [
+              "ALL",
+              "AVAILABLE",
+              "BOOKED"
+            ]
+          }
+        },
+        "type": "object"
+      },
+      "CreateSectionsBookingRequest": {
+        "properties": {
+          "auth": {
+            "$ref": "#/components/schemas/RoomApiAuth"
+          },
+          "name": {
+            "description": "Name",
+            "type": "string"
+          },
+          "prices": {
+            "$ref": "#/components/schemas/RoomsPricesDTO"
+          }
+        },
+        "type": "object"
+      },
+      "DeleteBookingRequest": {
+        "properties": {
+          "auth": {
+            "$ref": "#/components/schemas/RoomApiAuth"
+          },
+          "sectionId": {
+            "description": "Section Id",
+            "type": "number"
+          }
+        },
+        "type": "object"
+      },
+      "GetSectionsBookingRequest": {
+        "properties": {
+          "auth": {
+            "$ref": "#/components/schemas/RoomApiAuth"
+          }
+        },
+        "type": "object"
+      },
+      "ListSectionsBookingRequest": {
+        "properties": {
+          "auth": {
+            "$ref": "#/components/schemas/RoomApiAuth"
+          },
+          "sectionId": {
+            "description": "Section Id",
+            "type": "number"
+          }
+        },
+        "type": "object"
+      },
+      "UpdateSectionsBookingRequest": {
+        "properties": {
+          "auth": {
+            "$ref": "#/components/schemas/RoomApiAuth"
+          },
+          "name": {
+            "description": "Name",
+            "type": "string"
+          },
+          "section": {
+            "$ref": "#/components/schemas/RoomPriceSectionDTO"
+          },
+          "prices": {
+            "$ref": "#/components/schemas/RoomsPricesDTO"
+          }
+        },
+        "type": "object"
+      },
+      "StatusBookingRequest": {
+        "properties": {
+          "auth": {
+            "$ref": "#/components/schemas/RoomApiAuth"
+          },
+          "booking_id": {
+            "description": "Booking Id",
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "AddUserChatRequest": {
+        "properties": {
+          "chat_id": {
+            "type": "string"
+          },
+          "nicknames": {
+            "description": "List of users to add to chat",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "type": "object"
+      },
+      "GameStatusResponse": {
+        "properties": {
+          "id": {
+            "description": "Game ID",
+            "type": "number"
+          },
+          "status": {
+            "$ref": "#/components/schemas/GameStatusENUM"
+          },
+          "room_id": {
+            "description": "Room id if any",
+            "type": "string"
+          },
+          "room_name": {
+            "description": "Room name",
+            "type": "string"
+          },
+          "creation_date_time": {
+            "description": "Date of creation 'YYYY-MM-DD HH:mm:ss'",
+            "type": "string"
+          },
+          "message": {
+            "description": "Information message (if any)",
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "GameStatusENUM": {
+        "type": "string",
+        "enum": [
+          "NO_GAME",
+          "STARTED",
+          "PENDING_VALORATION",
+          "END",
+          "CANCELLED"
+        ]
+      },
+      "RateGameRequest": {
+        "properties": {
+          "rate": {
+            "description": "User rating (1 to 5)",
+            "type": "string"
+          },
+          "comment": {
+            "description": "(Optional) User free comment",
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "StartGameRequest": {
+        "properties": {
+          "room_id": {
+            "description": "Optional room ID get from rooms list service",
+            "type": "string"
+          },
+          "room_name": {
+            "type": "string"
+          },
+          "city": {
+            "description": "City of the room",
+            "type": "string"
+          },
+          "geo_latitude": {
+            "description": "User geolocation latitude",
+            "type": "string"
+          },
+          "geo_longitude": {
+            "description": "User geolocation longitude",
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "ValidateGameRequest": {
+        "properties": {
+          "geo_latitude": {
+            "description": "User geolocation latitude",
+            "type": "string"
+          },
+          "geo_longitude": {
+            "description": "User geolocation longitude",
+            "type": "string"
+          },
+          "completion_time": {
+            "description": "Minutes spend to complete the game",
+            "type": "number"
+          },
+          "passport_code": {
+            "description": "Passport number scanned code",
+            "type": "string"
+          },
+          "photo": {
+            "description": "Escape Room and players photo (base 64)",
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "ListRoomsRequest": {
+        "properties": {
+          "auth": {
+            "$ref": "#/components/schemas/RoomApiAuth"
+          }
+        },
+        "type": "object"
+      },
+      "UserSearchResultDTO": {
+        "properties": {
+          "id": {
+            "description": "User ID",
+            "type": "number"
+          },
+          "nickname": {
+            "description": "User nickname",
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "BookingRoomsDTO": {
+        "properties": {
+          "id": {
+            "description": "Booking Id",
+            "type": "number"
+          },
+          "room_id": {
+            "description": "Room Id",
+            "type": "number"
+          },
+          "user_id": {
+            "description": "User Id",
+            "type": "number"
+          },
+          "date": {
+            "description": "Date",
+            "type": "string"
+          },
+          "status": {
+            "description": "Booking Status",
+            "type": "number"
+          },
+          "price": {
+            "description": "Price",
+            "type": "number"
+          },
+          "players": {
+            "description": "Number of players",
+            "type": "number"
+          },
+          "comission_percentage": {
+            "description": "Comission Percentage",
+            "type": "number"
+          }
+        },
+        "type": "object"
+      },
+      "UserDTO": {
+        "properties": {
+          "id": {
+            "description": "The user id",
+            "type": "string"
+          },
+          "user": {
+            "description": "Login username",
+            "type": "string"
+          },
+          "avatar": {
+            "description": "Login username",
+            "type": "string"
+          },
+          "name": {
+            "description": "The user name",
+            "type": "string"
+          },
+          "lastname": {
+            "description": "The user last name",
+            "type": "string"
+          },
+          "email": {
+            "description": "The user email",
+            "type": "string"
+          },
+          "type": {
+            "description": "1=Player, 2=Room Owner",
+            "type": "number"
+          }
+        },
+        "type": "object"
+      },
+      "UserDirectionDTO": {
+        "properties": {
+          "province": {
+            "description": "User province ID",
+            "type": "number"
+          },
+          "country": {
+            "description": "User country ID",
+            "type": "number"
+          }
+        },
+        "type": "object"
+      },
+      "CountryDTO": {
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "name": {
+            "description": "Country name translated",
+            "type": "number"
+          },
+          "local_name": {
+            "description": "Original country name",
+            "type": "number"
+          }
+        },
+        "type": "object"
+      },
+      "RoomEscapeDTO": {
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "name": {
+            "description": "Room Escape country ID",
+            "type": "string"
+          },
+          "country": {
+            "description": "Room Escape country ID",
+            "type": "number"
+          },
+          "province": {
+            "description": "Room Escape province ID",
+            "type": "number"
+          },
+          "max_players": {
+            "description": "Max players allowed",
+            "type": "number"
+          }
+        },
+        "type": "object"
+      },
+      "AskForPlayerDTO": {
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "owner_id": {
+            "description": "User ID that generate the request",
+            "type": "number"
+          },
+          "day": {
+            "description": "YYYY-MM-DD",
+            "type": "string",
+            "format": "date"
+          },
+          "hour": {},
+          "room_id": {
+            "type": "number"
+          },
+          "room_name": {
+            "type": "number"
+          },
+          "num_request_player": {
+            "type": "number"
+          },
+          "description": {
+            "type": "number"
+          },
+          "status": {
+            "$ref": "#/components/schemas/AskForPlayerStatusENUM"
+          },
+          "date": {
+            "description": "Creation request date",
+            "type": "number"
+          },
+          "id_province": {
+            "type": "number"
+          }
+        },
+        "type": "object"
+      },
+      "UserProfileDTO": {
+        "properties": {
+          "perfil_publico": {
+            "description": "The user id",
+            "type": "boolean"
+          },
+          "played_rooms": {
+            "description": "Total of played rooms except current ranking",
+            "type": "boolean"
+          },
+          "time_played": {
+            "description": "Total played minutes except current ranking",
+            "type": "boolean"
+          }
+        },
+        "type": "object"
+      },
+      "ProvinceDTO": {
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "country": {
+            "description": "Country ID",
+            "type": "number"
+          },
+          "name": {
+            "description": "Local Province name",
+            "type": "number"
+          }
+        },
+        "type": "object"
+      },
+      "UserRankingDTO": {
+        "properties": {
+          "completed_rooms": {
+            "description": "Total completed rooms (points)",
+            "type": "number"
+          },
+          "extra_points": {
+            "description": "Total extra points",
+            "type": "number"
+          },
+          "league": {
+            "description": "The league ID",
+            "type": "number"
+          },
+          "time_played": {
+            "description": "Total time played",
+            "type": "number"
+          },
+          "position_country": {
+            "description": "Position in TOP country",
+            "type": "number"
+          },
+          "position_province": {
+            "description": "Position in TOP province",
+            "type": "number"
+          },
+          "position_league": {
+            "description": "Position in TOP league",
+            "type": "number"
+          },
+          "league_description": {
+            "description": "League name",
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "RoomsAvailabilityDTO": {},
+      "RoomsAvailabilityDefaultDTO": {
+        "properties": {
+          "room_id": {
+            "description": "Room Id",
+            "type": "number"
+          },
+          "week_day": {
+            "description": "Week Day",
+            "type": "number"
+          },
+          "session_start": {
+            "description": "Session Start",
+            "type": "string"
+          },
+          "comission_percentage": {
+            "description": "Comission Percentage",
+            "type": "number"
+          },
+          "price_section": {
+            "description": "Price Section",
+            "type": "number"
+          }
+        },
+        "type": "object"
+      },
+      "RoomsPricesDTO": {
+        "properties": {
+          "section_id": {
+            "description": "Room Id",
+            "type": "number"
+          },
+          "max_players": {
+            "description": "Total completed rooms (points)",
+            "type": "number"
+          },
+          "price_total": {
+            "description": "Total extra points",
+            "type": "number"
+          }
+        },
+        "type": "object"
+      },
+      "RoomPriceSectionDTO": {
+        "properties": {
+          "id": {
+            "description": "Id",
+            "type": "number"
+          },
+          "room_id": {
+            "description": "Room Id",
+            "type": "number"
+          },
+          "name": {
+            "description": "Name of the section",
+            "type": "string"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "bearerFormat": "JWT",
+        "scheme": "bearer"
+      }
+    }
+  }
+}
