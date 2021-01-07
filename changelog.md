@@ -6,6 +6,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.3.0] - 2021-01-07
+
+### Added
+- Issue [#12 - Support for multi array in api schemes](https://github.com/ProtocolNebula/ts-openapi-generator/issues/12)
+- JSON example
+- `Angular 2` generated example (partial, not all files are uploaded)
+
+### Changed
+- Now `generated` folder is no created anymore.
+> Please update your repositories or your "output" folder will be cleared on the next execution.
+> You have to specify explicity `generated` folder or your desired one.
+
+### Fixed
+- Fix "Capitalize" on api's (it was creating files and classes with spaces)
+
 ## [2.2.0] - 2021-01-06
 ### Added
 - Issue #3 - Custom templates: Now you can create a custom template and use it without modify the source code.
