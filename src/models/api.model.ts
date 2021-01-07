@@ -20,11 +20,11 @@ export class ApiModel implements PhysycalFile {
   response: ModelAttributessModel;
 
   get name(): string {
-    return camel(`${this.groupName} ${this.operationId}`);
+    return capital(`${this.groupName} ${this.operationId}`, '', true);
   }
 
   get groupName(): string {
-    return this.tags[0]?.length ? capital(this.tags[0]) : null;
+    return this.tags[0]?.length ? capital(this.tags[0], '', true) : null;
   }
 
   get models(): ModelAttributessModel[] {
@@ -66,7 +66,7 @@ export class ApiModel implements PhysycalFile {
     return this._verb;
   }
   set verb(verb: string) {
-    this._verb = capital(verb);
+    this._verb = capital(verb, '', true);
   }
 
   constructor(url: string, verb: string) {
