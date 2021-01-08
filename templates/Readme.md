@@ -65,16 +65,22 @@ This file implement `TemplateConfigI` interface (`src/models/template-config.mod
 
 ### api.?
 
+> Main model file: [models/api.model.ts](../src/models/api.model.ts)
+
 File used as template to generate each `Api` class.
 
 An API class is composed by some `endpoints` which share the `same 1rst "tag"`.
 
 ### model.?
 
+> Main model file: [models/model.model.ts](../src/models/model.model.ts)
+
 File used to generate `each model`.
 
 It's exported in a shared folder with all models.
 
 ### enumModel.?
+
+> Main model file: [models/enum.model.ts](../src/models/enum.model.ts)
 
 Same as `model` but for `enums`.

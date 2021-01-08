@@ -55,6 +55,7 @@ export class ModelAttributessModel {
    * Return a fake array with "arrayLevels" elements to print it in mustache.js
    */
   get arrayLevelsRepeater(): any[] {
+    if (!this.arrayLevels) return null;
     return new Array(this.arrayLevels).fill(true);
   }
 

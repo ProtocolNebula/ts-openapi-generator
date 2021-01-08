@@ -18,7 +18,7 @@ import { {{name}} } from './{{fileName}}';
 {{#model}}
 export class {{ name }} {
 
-  {{#attributes}}
+{{#attributes}}
   {{#hasComments}}
   /**
   {{#description}}
@@ -32,10 +32,13 @@ export class {{ name }} {
   {{/deprecated}}
    */
   {{/hasComments}}
-  {{name}}{{#isOptional}}?{{/isOptional}}: {{type}}{{#isArray
-  }}{{#arrayLevelsRepeater}}[]{{/arrayLevelsRepeater}}{{
-  /isArray}}{{#default}} = {{default}}{{/default}};
+  {{name}}{{
+    #isOptional}}?{{/isOptional
+  }}: {{type}}{{
+    #arrayLevelsRepeater}}[]{{/arrayLevelsRepeater
+  }}{{#default}} = {{default}}{{/default
+  }};
 
-  {{/attributes}}
+{{/attributes}}
 }
 {{/model}}
