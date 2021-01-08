@@ -61,7 +61,7 @@ export class FileReaderService {
     }
 
     if (isURL(this.path)) {
-      this.localFilePath = `${this.configuration.outputPath}temp.${extension}`;
+      this.localFilePath = `${this.configuration.tempFilePath}.${extension}`;
       console.log(`${this.path} will be saved as ${this.localFilePath}...`);
       await downloadFile(this.path, this.localFilePath);
       console.log(`${this.localFilePath} saved!`);

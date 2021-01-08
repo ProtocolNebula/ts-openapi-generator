@@ -3,6 +3,7 @@ import { resolve as pathResolve } from 'path';
 import { TemplateConfigModel } from './template-config.model';
 
 export interface ConfigI {
+  tempFilePath: string;
   outputPath: string;
   readonly exportPath: string;
   readonly outputModelsPath: string;
@@ -12,6 +13,7 @@ export interface ConfigI {
 }
 
 class ConfigModel implements ConfigI {
+  private _tempFilePath: string;
   private _outputPath: string;
   private _outputBaseFolder: string = '';
   private _outputModelsFolder: string = 'models';
@@ -35,6 +37,14 @@ class ConfigModel implements ConfigI {
 
   get outputApisPath(): string {
     return pathResolve(this.exportPath, this._outputApisFolder);
+  }
+
+  get tempFilePath(): string {
+    return this._tempFilePath;
+  }
+
+  set tempFilePath(tempFilePath: string) {
+    this._tempFilePath = tempFilePath;
   }
 
   get template(): string {
@@ -84,6 +94,7 @@ class ConfigModel implements ConfigI {
 
   parseYargs(yargs): void {
     this._outputPath = yargs.outputFolder;
+    this.tempFilePath = pathResolve(yargs.saveFile);
     this.template = yargs.template;
   }
 }

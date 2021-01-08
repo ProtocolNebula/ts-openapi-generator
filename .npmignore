@@ -3,4 +3,5 @@
 dist
 examples
 node_modules
+openapi_temp*
 output

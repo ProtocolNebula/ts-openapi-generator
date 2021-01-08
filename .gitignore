@@ -1,6 +1,7 @@
 .DS_Store
 .history
-node_modules
-dist
 build
+dist
+node_modules
+openapi_temp*
 output
