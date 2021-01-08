@@ -4,10 +4,11 @@ import { TemplateConfigModel } from './template-config.model';
 
 export interface ConfigI {
   outputPath: string;
-  exportPath: string;
-  outputModelsPath: string;
-  outputApisPath: string;
-  templateConfig: TemplateConfigModel;
+  readonly exportPath: string;
+  readonly outputModelsPath: string;
+  readonly outputApisPath: string;
+  template: string;
+  readonly templateConfig: TemplateConfigModel;
 }
 
 class ConfigModel implements ConfigI {
