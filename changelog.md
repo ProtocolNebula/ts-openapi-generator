@@ -6,12 +6,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.3.2] - 2021-01-09
+### Addded
+- `--config-file` parameter
+- `index.ts` file which export the main classes and functions to work pragmatically from nodejs (pending docs)
+
+### Fixed
+- save-file alias for cli
+- main.ts config usage
+- Prepush hook
+
 ## [2.3.1] - 2021-01-09
 ### Added
 - Parameter to choose where to save the `open api (swagger) file` if `--file` is an `URL`. Default path is `./open-api` (.json/.yaml added automatically).
 
 ### Fixed
 - Now "properties" inside "properties" inside "schema" are transformed to an object, previously was `any`.
+- 
 ## [2.3.0] - 2021-01-07
 ### Added
 - Issue [#12 - Support for multi array in api schemes](https://github.com/ProtocolNebula/ts-openapi-generator/issues/12)
