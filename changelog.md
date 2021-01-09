@@ -12,9 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - Now "properties" inside "properties" inside "schema" are transformed to an object, previously was `any`.
-
 ## [2.3.0] - 2021-01-07
-
 ### Added
 - Issue [#12 - Support for multi array in api schemes](https://github.com/ProtocolNebula/ts-openapi-generator/issues/12)
 - JSON example
