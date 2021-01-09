@@ -5,6 +5,9 @@
   - [Installation](#installation)
   - [Usage](#usage)
     - [The script](#the-script)
+    - [Config file](#config-file)
+      - [Create the config file (you choose the name and the location)](#create-the-config-file-you-choose-the-name-and-the-location)
+      - [Launch the script](#launch-the-script)
     - [Main CLI commands](#main-cli-commands)
   - [Development](#development)
     - [Run with watch (internet file)](#run-with-watch-internet-file)
@@ -46,25 +49,51 @@ Is recommended to add a script to your `package.json` or package manager that yo
 transform-swagger -f URI/TO/SWAGGER/JSON/OR/YAML -o src/generatedApi/ -t angular2
 ```
 
+### Config file
+
+> The settings of the config file are the same than cli one (but in `camelCase`).
+
+#### Create the config file (you choose the name and the location)
+
+We will name for example `transfrom-config.json`
+
+```json
+{
+  "clean": true,
+  "file": "./examples/openApiFiles/passportescaperoom.com.json",
+  "outputFolder": "./examples/generated/angular2",
+  "template": "angular2",
+  "saveFile": "./openApiFiles/passportescaperoom.com"
+}
+```
+
+#### Launch the script
+
+```bash
+transform-swagger config-file ./examples/transform-config.json
+```
+
 ### Main CLI commands
 
 ```bash
 Usage: transform-swagger [options]
 
 Options:
-  --version, -v        Show version number                         [boolean]
+  --version, -v        Show version number                             [boolean]
+  --config-file        Configuration file to use (values from cli will overwrite
+                       the files one).
   --clean              No clean the output-folder, so old files will remain
-                                                   [boolean] [default: true]
-  -f, --file           Path OR URL to the swagger document to parse
-                                                                  [required]
+                                                       [boolean] [default: true]
+  -f, --file           Path OR URL to the swagger document to parse   [required]
   -o, --output-folder  Specify the output folder (generated folders will be
-                       replaced)                         [default: "output"]
+                       replaced)                             [default: "output"]
   -t, --template       Template (preset) name or path to a template
-  -h, --help           Show help                                   [boolean]
+  -h, --help           Show help                                       [boolean]
+  -s, --save-file                                    [default: "./openapi_temp"]
 
 Examples:
-  transform-swagger -f swagger.js -o      Convert a Swagger JSON file to
-  api/ -t angular2                        compatible-angular API
+  cli -f swagger.js -o api/ -t angular2  Convert a Swagger JSON file to
+                                         compatible-angular API
 ```
 
 ## Development
