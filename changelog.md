@@ -6,6 +6,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.3.1] - 2021-01-09
+### Added
+- Parameter to choose where to save the `open api (swagger) file` if `--file` is an `URL`. Default path is `./open-api` (.json/.yaml added automatically).
+
+### Fixed
+- Now "properties" inside "properties" inside "schema" are transformed to an object, previously was `any`.
+
 ## [2.3.0] - 2021-01-07
 
 ### Added
