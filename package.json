@@ -79,7 +79,7 @@
   "husky": {
     "hooks": {
       "pre-commit": "pretty-quick --staged",
-      "pre-push": "npm run generate:examples && git add examples/ && (git commit -m 'Updated examples' || return 0)"
+      "pre-push": "npm run generate:examples && (git add examples/ && git commit -m 'Updated examples' || echo 'No example changes')"
     }
   }
 }
