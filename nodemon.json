@@ -2,5 +2,5 @@
   "watch": ["src", "templates"],
   "ext": "ts,json",
   "ignore": ["src/**/*.spec.ts"],
-  "exec": "npx ts-node ./src/main.ts"
+  "exec": "npx ts-node ./src/cli.ts"
 }

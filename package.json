@@ -17,17 +17,17 @@
     "time-saver",
     "tool"
   ],
-  "main": "dist/main.js",
-  "types": "dist/main.d.ts",
+  "main": "dist/cli",
+  "types": "dist/cli.d.ts",
   "scripts": {
     "prepublish": "npm run build",
-    "start": "ts-node src/main.ts",
+    "start": "ts-node src/cli",
     "start:dev": "npx nodemon",
     "start:build": "node build/index.js",
     "start:webpack": "npx webpack --watch",
     "build": "tsc",
     "build:webpack": "npx webpack --mode production",
-    "generate:examples": "npm start -- -f examples/openApiFiles/passportescaperoom.com.json -o examples/generated/angular2 -t angular2",
+    "generate:examples": "npm start -- --config-file ./examples/transform-config.json",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "license": "ISC",
@@ -44,7 +44,7 @@
     "url": "https://patreon.com/ProtocolNebula"
   },
   "bin": {
-    "transform-swagger": "./cli.js"
+    "transform-swagger": "./build/cli.js"
   },
   "homepage": "https://github.com/ProtocolNebula/ts-openapi-generator",
   "repository": {
@@ -79,7 +79,7 @@
   "husky": {
     "hooks": {
       "pre-commit": "pretty-quick --staged",
-      "pre-push": "npm run generate:examples && git add examples/ && (git commit -m 'Updated examples' || return 0)"
+      "pre-push": "npm run generate:examples && (git add examples/ && git commit -m 'Updated examples' || echo 'No example changes')"
     }
   }
 }

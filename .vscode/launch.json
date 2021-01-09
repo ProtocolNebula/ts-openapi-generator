@@ -8,7 +8,7 @@
       "type": "node",
       "request": "launch",
       "name": "Launch Program",
-      "program": "${workspaceFolder}/src/main.ts",
+      "program": "${workspaceFolder}/src/cli.ts",
       "preLaunchTask": "tsc: build - tsconfig.json",
       "args": [
         "-f",
