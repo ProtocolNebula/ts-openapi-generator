@@ -220,6 +220,11 @@ export abstract class ParserBaseService {
           newModel.values = rawAttribute.enum;
           this.store.models.add(newModel);
           attribute.typeURI = newModel.uri;
+        } else if (rawAttribute.type === 'object' && rawAttribute.properties) {
+          const newModel = new ModelModel(defaultName);
+          newModel.addAttributes(this.parseAttributes(rawAttribute, defaultName));
+          this.store.models.add(newModel);
+          attribute.typeURI = newModel.uri;
         } else {
           console.debug(`${attrName} of type ${rawAttribute.type}`);
           attribute.typeURI = rawAttribute.type;
