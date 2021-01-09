@@ -10,8 +10,11 @@ export const argumentsInstance = yargs
   )
 
   .nargs('save-file', 1)
-  .alias('s', 'file')
-  .describe('file', 'Path to save the file IF --file IS AN URL (without extension)')
+  .alias('s', 'save-file')
+  .describe(
+    'file',
+    'Path to save the file IF --file IS AN URL (without extension)',
+  )
   .default('save-file', './openapi_temp')
 
   .nargs('file', 1)
@@ -41,5 +44,6 @@ export const argumentsInstance = yargs
   .help('help')
   .alias('h', 'help')
 
-  .epilog('For more info visit: https://github.com/ProtocolNebula/ts-openapi-generator/')
-  .argv;
+  .epilog(
+    'For more info visit: https://github.com/ProtocolNebula/ts-openapi-generator/',
+  ).argv;
