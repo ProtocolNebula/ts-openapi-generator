@@ -96,6 +96,19 @@ Examples:
                                          compatible-angular API
 ```
 
+## From node/TypeScript
+
+1. Install the library
+2. Include to your proyect
+3. Create the config file
+4. Launch the script
+
+### Example (generate.ts)
+
+```ts
+import * from '
+```
+
 ## Development
 
 ### Run with watch (internet file)
