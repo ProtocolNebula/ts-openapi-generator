@@ -3,13 +3,17 @@ import { resolve as pathResolve } from 'path';
 import { TemplateConfigModel } from './template-config.model';
 
 export interface ConfigI {
-  tempFilePath: string;
+  cleanFolder: boolean;
+  fileURI: string;
   outputPath: string;
-  readonly exportPath: string;
-  readonly outputModelsPath: string;
-  readonly outputApisPath: string;
+  tempFilePath: string;
   template: string;
+
+  readonly exportPath: string;
+  readonly outputApisPath: string;
+  readonly outputModelsPath: string;
   readonly templateConfig: TemplateConfigModel;
+  readonly templatePath;
 }
 
 class ConfigModel implements ConfigI {
@@ -23,8 +27,14 @@ class ConfigModel implements ConfigI {
   private _templatePath: string;
   private _templateConfig: TemplateConfigModel;
 
+  fileURI: string;
+  cleanFolder: boolean;
+
   get outputPath(): string {
     return this._outputPath;
+  }
+  set outputPath(outputPath: string) {
+    this._outputPath = pathResolve(outputPath);
   }
 
   get exportPath(): string {
@@ -44,7 +54,7 @@ class ConfigModel implements ConfigI {
   }
 
   set tempFilePath(tempFilePath: string) {
-    this._tempFilePath = tempFilePath;
+    this._tempFilePath = pathResolve(tempFilePath);
   }
 
   get template(): string {
@@ -85,17 +95,44 @@ class ConfigModel implements ConfigI {
 
   get templateConfig(): TemplateConfigModel {
     if (!this._templateConfig) {
-      this._templateConfig = new TemplateConfigModel(pathResolve(this.templatePath, 'config'));
+      this._templateConfig = new TemplateConfigModel(
+        pathResolve(this.templatePath, 'config'),
+      );
     }
     return this._templateConfig;
   }
 
   constructor() {}
 
+  setConfig(config: ConfigI) {
+    for (const key in config) {
+      const value = config[key];
+      if (value) {
+        this[key] = value;
+      } else {
+        console.warn(`${key} in config not recognized`);
+      }
+    }
+  }
+
   parseYargs(yargs): void {
-    this._outputPath = yargs.outputFolder;
-    this.tempFilePath = pathResolve(yargs.saveFile);
-    this.template = yargs.template;
+    const config = {} as ConfigI;
+    if (yargs.saveFile) {
+      config.tempFilePath = yargs.saveFile;
+    }
+    if (yargs.file) {
+      config.fileURI = yargs.file;
+    }
+    if (yargs.template) {
+      config.template = yargs.template;
+    }
+    if (yargs.outputFolder) {
+      config.outputPath = yargs.outputFolder;
+    }
+    if (this.cleanFolder === undefined || yargs.clean === false) {
+      config.cleanFolder = yargs.clean;
+    }
+    this.setConfig(config);
   }
 }
 
