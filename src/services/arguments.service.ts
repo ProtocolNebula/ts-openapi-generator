@@ -1,4 +1,5 @@
 import * as yargs from 'yargs';
+import { readFileSync } from 'fs';
 
 export const argumentsInstance = yargs
   .alias('version', 'v')
@@ -8,6 +9,15 @@ export const argumentsInstance = yargs
     '$0 -f swagger.js -o api/ -t angular2',
     'Convert a Swagger JSON file to compatible-angular API',
   )
+
+  .config('config-file', (configPath) => {
+    return JSON.parse(readFileSync(configPath, 'utf-8'));
+  })
+  .describe(
+    'config-file',
+    'Configuration file to use (values from cli will overwrite the files one).',
+  )
+  .default('save-file', './openapi_temp')
 
   .nargs('save-file', 1)
   .alias('s', 'save-file')

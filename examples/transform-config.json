@@ -1,0 +1,7 @@
+{
+  "clean": true,
+  "file": "./examples/openApiFiles/passportescaperoom.com.json",
+  "outputFolder": "./examples/generated/angular2",
+  "template": "angular2",
+  "saveFile": "./openApiFiles/passportescaperoom.com"
+}
