@@ -1,5 +1,5 @@
-// THIS IS FILE IS AUTO-GENERATED
-// PLEASE, NOT MODIFY MANUALLY
+// THIS FILE IS AN AUTO GENERATED FILE
+// PLEASE, DO NOT MODIFY MANUALLY
 
 // Angular dependences
 import { Injectable } from '@angular/core';
