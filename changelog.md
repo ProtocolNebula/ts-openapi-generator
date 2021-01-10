@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- Support for https remote files
 ## [2.3.2] - 2021-01-09
 ### Addded
 - `--config-file` parameter

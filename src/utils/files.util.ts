@@ -1,16 +1,23 @@
-import { createWriteStream, readdirSync, readFileSync, writeFileSync } from 'fs';
+import {
+  createWriteStream,
+  readdirSync,
+  readFileSync,
+  writeFileSync,
+} from 'fs';
 import * as http from 'http';
+import * as https from 'https';
 import * as yaml from 'js-yaml';
 import { mkdirSync } from 'mkdir-recursive';
 import { basename, dirname, extname, resolve as pathResolve } from 'path';
 import { config } from '../models/config.model';
 
 const getExtensionRegex = /(\.[a-z0-9]+).*/i;
+const isHttpsRegex = /^https/i;
 
 export function getAllFoldersFrom(path) {
   return readdirSync(path, { withFileTypes: true })
-    .filter(el => el.isDirectory())
-    .map(el => el.name);
+    .filter((el) => el.isDirectory())
+    .map((el) => el.name);
 }
 
 export function makeDir(dest): void {
@@ -22,7 +29,8 @@ export async function downloadFile(url, dest): Promise<string> {
   return new Promise((resolve, error) => {
     try {
       const file = createWriteStream(dest);
-      http.get(url, function (response) {
+      const protocol = isHttpsRegex.test(url) ? https : http;
+      protocol.get(url, function (response) {
         response.pipe(file);
         file.on('finish', () => {
           file.close();
