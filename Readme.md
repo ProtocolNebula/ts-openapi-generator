@@ -70,7 +70,7 @@ We will name for example `transfrom-config.json`
 #### Launch the script
 
 ```bash
-transform-swagger config-file ./examples/transform-config.json
+transform-swagger --config-file ./examples/transform-config.json
 ```
 
 ### Main CLI commands

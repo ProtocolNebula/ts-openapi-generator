@@ -22,7 +22,7 @@ You can also try to use `the original files` from each source or test with `your
 ```bash
 npm start -- -f examples/openApiFiles/passportescaperoom.com.json -o examples/generated/angular2 -t angular2
 # OR
-npm start -- config-file ./examples/transform-config.json
+npm start -- --config-file ./examples/transform-config.json
 ```
 
 **Generate from url**
