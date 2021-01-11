@@ -1,4 +1,6 @@
+![Logo](assets/logo.png)
 # TypeScript OpenApi/Swagger Generator
+
 
 - [TypeScript OpenApi/Swagger Generator](#typescript-openapiswagger-generator)
   - [Description](#description)
