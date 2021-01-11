@@ -72,15 +72,30 @@ export class FileReaderService {
         return document;
       case '2':
         console.info('Convertin to OpenAPI V3');
-        const converter = require('swagger2openapi');
-        const converted = await converter.convertObj(document, {
-          patch: true,
-          warnOnly: true,
-        });
-        return converted.openapi;
+        return this.convertFile('swagger_2', document);
+      case '1':
+        return this.convertFile('swagger_1', document);
       default:
         throw 'This OpenAPi/Swagger version is not compatible with this tool';
     }
+  }
+
+  /**
+   * Convert from file definition to OpenAPI V3
+   * @param from
+   * @param document
+   * @url https://github.com/LucyBot-Inc/api-spec-converter
+   */
+  private async convertFile(
+    from: string,
+    document: any,
+  ): Promise<OpenAPIV3.Document> {
+    const Converter = require('api-spec-converter');
+    return Converter.convert({
+      from,
+      to: 'openapi_3',
+      source: 'https://api.gettyimages.com/swagger/api-docs',
+    });
   }
 
   private async prepareFile(): Promise<void> {
