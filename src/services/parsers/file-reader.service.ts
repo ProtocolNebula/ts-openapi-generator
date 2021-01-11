@@ -10,6 +10,8 @@ import {
 } from '../../utils/files.util';
 import { isURL } from '../../utils/string.util';
 
+const versionRegx = /^([0-9]+)/;
+
 /**
  * Main calss which parse the JSON/YAML file
  * If the file is a URL, it will download
@@ -30,7 +32,8 @@ export class FileReaderService {
 
   async readFile(): Promise<OpenAPIV3.Document> {
     await this.prepareFile();
-    this._document = await this.parseFile();
+    const document = await this.parseFile();
+    this._document = await this.upgradeFile(document);
     return this.document;
   }
 
@@ -49,6 +52,35 @@ export class FileReaderService {
     }
     console.groupEnd();
     console.info('');
+  }
+
+  async upgradeFile(document: any): Promise<OpenAPIV3.Document> {
+    let version: string;
+    if (document.openapi) {
+      version = versionRegx.exec(document.openapi)[1];
+    } else if (document.swagger) {
+      version = versionRegx.exec(document.swagger)[1];
+    }
+
+    if (!version) {
+      throw 'This is not a valid OpenApi/Swagger document';
+    }
+
+    console.info('Swagger/API version detected:', version);
+    switch (version) {
+      case '3':
+        return document;
+      case '2':
+        console.info('Convertin to OpenAPI V3');
+        const converter = require('swagger2openapi');
+        const converted = await converter.convertObj(document, {
+          patch: true,
+          warnOnly: true,
+        });
+        return converted.openapi;
+      default:
+        throw 'This OpenAPi/Swagger version is not compatible with this tool';
+    }
   }
 
   private async prepareFile(): Promise<void> {
@@ -70,7 +102,7 @@ export class FileReaderService {
     }
   }
 
-  private parseFile(): OpenAPIV3.Document {
+  private parseFile(): any {
     const filePath = this.localFilePath;
     switch (fileExtension(filePath)) {
       case 'yaml':
