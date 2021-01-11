@@ -8,11 +8,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - Support for https remote files
-- Support for Swagger 2 files (added [swagger2openapi](https://github.com/Mermade/oas-kit/) which converts the file to OpenAPI V3)
+- Added **but not used** [swagger2openapi](https://github.com/Mermade/oas-kit/) to future validations (and first method to convert Swagger 2 to OpenAPI V3 with this library)
+- Support for `Swagger 1` and `Swagger 2 (Open API)` files (using [api-spec-converter](https://github.com/LucyBot-Inc/api-spec-converter) which converts the file to `OpenAPI V3`.
 
 ### Changed
 - APIs: If no `tags` provided, the URL is splitted and used as `tags`.
-- 
+  
 ## [2.3.2] - 2021-01-09
 ### Addded
 - `--config-file` parameter
