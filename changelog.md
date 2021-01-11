@@ -6,6 +6,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- Support for https remote files
+- Support for Swagger 2 files (added [swagger2openapi](https://github.com/Mermade/oas-kit/) which converts the file to OpenAPI V3)
+
+### Changed
+- APIs: If no `tags` provided, the URL is splitted and used as `tags`.
+- 
 ## [2.3.2] - 2021-01-09
 ### Addded
 - `--config-file` parameter
