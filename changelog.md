@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.3.3] - 2021-01-11
 ### Added
 - Support for https remote files
 - Added **but not used** [swagger2openapi](https://github.com/Mermade/oas-kit/) to future validations (and first method to convert Swagger 2 to OpenAPI V3 with this library)
