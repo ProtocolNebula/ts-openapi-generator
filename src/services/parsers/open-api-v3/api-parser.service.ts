@@ -30,7 +30,7 @@ export class APIParserService extends ParserBaseService {
       const verbRaw = rawModel[verb] as OpenAPIV3.OperationObject;
       console.group(verb.toUpperCase(), '-', verbRaw.operationId);
       const api = new ApiModel(url, verb);
-      api.tags = verbRaw.tags;
+      api.tags = verbRaw.tags || url.substr(1).split('/');
       api.description = verbRaw.summary;
       api.operationId = verbRaw.operationId;
 
