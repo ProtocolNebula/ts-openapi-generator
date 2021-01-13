@@ -4,9 +4,11 @@
 // Angular dependences
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+import { map } from 'rxjs/operators';
 
 // Main dependences
 import { ApiBaseService } from '../../ApiBase/api-base.service';
+import { recursiveInstance, recursiveStringfy } from '../../ApiBase/model-base.model';
 
 // Models dependences
 {{#dependences}}
@@ -32,10 +34,10 @@ export class {{groupName}}Service {
   {{#hasComments}}
   /**
   {{#description}}
-   * {{description}}
+   * {{{description}}}
   {{/description}}
   {{#example}}
-   * @example {{example}}
+   * @example {{{example}}}
   {{/example}}
   {{#deprecated}}
    * @deprecated
@@ -55,8 +57,22 @@ export class {{groupName}}Service {
     return this.apiService.do{{verb}}(
       '{{{ url }}}',
       {{#queryParamsType}}uriOptions{{/queryParamsType}}{{^queryParamsType}}null{{/queryParamsType}},
-      {{#requestBodyType}}requestBody{{/requestBodyType}}{{^requestBodyType}}null{{/requestBodyType}}
-    );
+      {{^requestBodyType}}null{{/requestBodyType}}{{
+        #requestBodyType}}{{
+        ^isFormRequest}}recursiveStringfy(requestBody){{/isFormRequest
+        }}{{
+        #isFormRequest}}this.apiService.generateFormData(recursiveStringfy(requestBody)){{/isFormRequest
+        }}{{/requestBodyType}},
+      {{!
+        // Remove "null" line and uncomment line below
+        // if you want to set "content-type" on headers
+      }}
+      null,
+      // { {{#requestContentType}} headers: { 'Content-Type': '{{{requestContentType}}}' } {{/requestContentType}} },
+    ){{^isResponsePrimitive}}
+      .pipe(
+        map(response => recursiveInstance({{responseType}}, response))
+      ){{/isResponsePrimitive}};
   }
 
   {{/apis}}

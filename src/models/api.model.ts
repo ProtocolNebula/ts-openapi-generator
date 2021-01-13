@@ -16,6 +16,7 @@ export class ApiModel implements PhysycalFile {
   private _operationId: string;
 
   queryParams: ModelAttributessModel;
+  requestContentType?: string;
   requestBody: ModelAttributessModel;
   response: ModelAttributessModel;
 
@@ -25,6 +26,14 @@ export class ApiModel implements PhysycalFile {
 
   get groupName(): string {
     return this.tags[0]?.length ? capital(this.tags[0], '', true) : null;
+  }
+
+  get isFormRequest(): boolean {
+    return this.requestContentType === 'multipart/form-data';
+  }
+
+  get isResponsePrimitive(): boolean {
+    return !this.response || this.response?.typeIsPrimitive;
   }
 
   get models(): ModelAttributessModel[] {

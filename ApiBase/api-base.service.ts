@@ -3,6 +3,7 @@ import {
   HttpClient,
   HttpHeaders,
   HttpErrorResponse,
+  HttpParams,
 } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/internal/Subscription';
@@ -19,6 +20,23 @@ const PROD_MODE = environment.production;
 export interface APIError {
   error: any;
   errorText: string;
+}
+
+export interface HttpOptions {
+  headers?:
+    | HttpHeaders
+    | {
+        [header: string]: string | string[];
+      };
+  observe?: 'body';
+  params?:
+    | HttpParams
+    | {
+        [param: string]: string | string[];
+      };
+  reportProgress?: boolean;
+  responseType?: 'json';
+  withCredentials?: boolean;
 }
 
 /**
@@ -83,50 +101,80 @@ export class ApiBaseService {
     this.serverURL = url;
   }
 
-  public doGet(url, params = null, data = null): Observable<any> {
-    const options = this.getOptions(url, params, data);
+  public doGet(
+    url,
+    params = null,
+    data = null,
+    customOptions?: Partial<HttpOptions>,
+  ): Observable<any> {
+    const options = this.getOptions(customOptions);
     url = this.parseURLParams(url, params);
     // TODO: Add support to http.get<RESPONSETYPE>() or on .subscribe
     return this.http.get(this.serverURL + url, options).pipe(
       // retry(1),
-      catchError((error) => this.handleError(error))
+      catchError((error) => this.handleError(error)),
     );
   }
 
-  public doPost(url, params, data): Observable<any> {
-    const options = this.getOptions(url, params, data);
+  public doPost(
+    url,
+    params,
+    data,
+    customOptions?: Partial<HttpOptions>,
+  ): Observable<any> {
+    const options = this.getOptions(customOptions);
     url = this.parseURLParams(url, params);
     return this.http
       .post(this.serverURL + url, data, options)
       .pipe(catchError((error) => this.handleError(error)));
   }
 
-  public doPut(url, params, data): Observable<any> {
-    const options = this.getOptions(url, params, data);
+  public doPut(
+    url,
+    params,
+    data,
+    customOptions?: Partial<HttpOptions>,
+  ): Observable<any> {
+    const options = this.getOptions(customOptions);
     url = this.parseURLParams(url, params);
     return this.http
       .put(this.serverURL + url, data, options)
       .pipe(catchError((error) => this.handleError(error)));
   }
 
-  public doOptions(url, params, data = null): Observable<any> {
-    const options = this.getOptions(url, params, data);
+  public doOptions(
+    url,
+    params,
+    data = null,
+    customOptions?: Partial<HttpOptions>,
+  ): Observable<any> {
+    const options = this.getOptions(customOptions);
     url = this.parseURLParams(url, params);
     return this.http
       .options(this.serverURL + url, options)
       .pipe(catchError((error) => this.handleError(error)));
   }
 
-  public doPatch(url, params, data = null): Observable<any> {
-    const options = this.getOptions(url, params, data);
+  public doPatch(
+    url,
+    params,
+    data = null,
+    customOptions?: Partial<HttpOptions>,
+  ): Observable<any> {
+    const options = this.getOptions(customOptions);
     url = this.parseURLParams(url, params);
     return this.http
       .patch(this.serverURL + url, options)
       .pipe(catchError((error) => this.handleError(error)));
   }
 
-  public doDelete(url, params, data = null): Observable<any> {
-    const options = this.getOptions(url, params, data);
+  public doDelete(
+    url,
+    params,
+    data = null,
+    customOptions?: Partial<HttpOptions>,
+  ): Observable<any> {
+    const options = this.getOptions(customOptions);
     url = this.parseURLParams(url, params);
     return this.http
       .delete(this.serverURL + url, options)
@@ -194,11 +242,8 @@ export class ApiBaseService {
     } as APIError);
   }
 
-  protected getOptions(url, params = null, data = null) {
-    return {
-      headers: this.httpHeaders,
-      // params: this.parseURLParams(url, params),
-    };
+  protected getOptions(customOptions?: Partial<HttpOptions>) {
+    return Object.assign({ headers: { ...this.httpHeaders } }, customOptions);
   }
 
   /**
