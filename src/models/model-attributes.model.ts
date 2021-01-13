@@ -36,6 +36,13 @@ export class ModelAttributessModel {
     return getFixedTypeName(this._typeURI);
   }
 
+  get typeIsPrimitive(): boolean {
+    return this.typeURI.indexOf('#/') === -1;
+  }
+  get typeNotPrimitive(): boolean {
+    return !this.typeIsPrimitive;
+  }
+
   /**
    * Get the path to the file if is not a primitive
    */
