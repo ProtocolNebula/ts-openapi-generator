@@ -13,8 +13,15 @@
  */
 {{/hasComments}}
 export enum {{ name }} {
+{{#isNumeric}}
+  {{#values}}
+  {{.}},
+  {{/values}}
+{{/isNumeric}}
+{{#isString}}
   {{#values}}
   '{{.}}' = '{{.}}',
   {{/values}}
+{{/isString}}
 }
 {{/model}}

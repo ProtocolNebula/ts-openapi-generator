@@ -34,7 +34,15 @@ export class EnumModel<T = string> implements PhysycalFile {
   }
 
   get hasComments(): boolean {
-    return !!this.description || !!this.example || !!this.deprecated;
+    return !!this.description || !!this.example || !!this.deprecated;
+  }
+
+  get isString(): boolean {
+    return !this.isNumeric;
+  }
+
+  get isNumeric(): boolean {
+    return this.type === 'integer' || this.type === 'number';
   }
 
   get values(): T[] {
