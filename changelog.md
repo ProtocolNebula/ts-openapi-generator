@@ -6,6 +6,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.4.0] - 2021-01-18
+> This can break your `angular 2` app, now all APIs require a model instance.
+> Also returns an instance, this can be a big break change, please test your app after build (in another branch) and fix all manually.
+### Added
+- Added support for numeric enums
+- In "api-model":
+    - "contentType" (request)
+- In "model-attributes" model:
+    - isTypePrimitive
+    - isNotPrimitive
+
+### Changes
+- `API Base` (angular 2):
+    - You can add to your angular without doing changes
+    - Removed all store dependences
+    - Removed handle error
+- `Angular 2` template:
+    - Added "model-base" which are extended by all generated models to parse/stringfy models
+    - Added "mapping" to all API responses (with model-base)
+
 ## [2.3.3] - 2021-01-11
 ### Added
 - Support for https remote files
