@@ -1,18 +1,10 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
-import { catchError, map } from 'rxjs/operators';
-
-import { Store } from '@ngrx/store';
-import { AppState } from '@app/store/app.reducers';
 import { HTTP } from '@ionic-native/http/ngx';
-import { ApiBaseService } from './api-base.service';
 import { from } from 'rxjs/internal/observable/from';
-
-export interface APIError {
-  error: any;
-  errorText: string;
-}
+import { Observable } from 'rxjs/Observable';
+import { map } from 'rxjs/operators';
+import { ApiBaseService } from './api-base.service';
 
 /**
  * Implementation of angular-http
@@ -22,48 +14,48 @@ export interface APIError {
  */
 @Injectable()
 export class ApiBaseNativeService extends ApiBaseService {
-  constructor(
-    protected http: HttpClient,
-    protected store$: Store<AppState>,
-    protected httpNative: HTTP
-  ) {
-    super(http, store$);
+  constructor(protected http: HttpClient, protected httpNative: HTTP) {
+    super(http);
   }
 
   public doGet(url, params = null, data = null): Observable<any> {
     // const options = this.getOptions(url, params, data);
     url = this.parseURLParams(url, params);
     return from(
-      this.httpNative.get(this.serverURL + url, {}, this.httpHeadersPlain)
-    ).pipe(
-      map((response) => JSON.parse(response.data)),
-      catchError((error) => this.handleError(error))
-    );
+      this.httpNative.get(this.serverURL + url, {}, this.httpHeadersPlain),
+    ).pipe(map((response) => JSON.parse(response.data)));
   }
 
   public doPost(url, params, data): Observable<any> {
     // const options = this.getOptions(url, params, data);
+    url = this.parseURLParams(url, params);
     this.setHeaders();
     url = this.parseURLParams(url, params);
-    return from(this.httpNative.post(this.serverURL + url, data, {})).pipe(
-      catchError((error) => this.handleError(error))
-    );
+    return from(this.httpNative.post(this.serverURL + url, data, {})).pipe();
   }
 
   public doPut(url, params, data): Observable<any> {
     // const options = this.getOptions(url, params, data);
     url = this.parseURLParams(url, params);
     return from(
-      this.httpNative.put(this.serverURL + url, data, this.httpHeadersPlain)
-    ).pipe(catchError((error) => this.handleError(error)));
+      this.httpNative.put(this.serverURL + url, data, this.httpHeadersPlain),
+    );
+  }
+
+  public doPatch(url, params, data): Observable<any> {
+    // const options = this.getOptions(url, params, data);
+    url = this.parseURLParams(url, params);
+    return from(
+      this.httpNative.patch(this.serverURL + url, data, this.httpHeadersPlain),
+    );
   }
 
   public doDel(url, params, data = null): Observable<any> {
     // const options = this.getOptions(url, params, data);
     url = this.parseURLParams(url, params);
     return from(
-      this.httpNative.delete(this.serverURL + url, {}, this.httpHeadersPlain)
-    ).pipe(catchError((error) => this.handleError(error)));
+      this.httpNative.delete(this.serverURL + url, {}, this.httpHeadersPlain),
+    );
   }
 
   public generateFormData(values: any): FormData {
@@ -87,20 +79,8 @@ export class ApiBaseNativeService extends ApiBaseService {
       this.httpNative.setHeader(
         '*',
         String(key),
-        String(this.httpHeadersPlain[key])
+        String(this.httpHeadersPlain[key]),
       );
     }
-  }
-
-  protected handleError(error: HttpErrorResponse): Observable<APIError> {
-    console.error('ERROR CATCHED', error);
-    return super.handleError(error);
-  }
-
-  protected getOptions(url, params = null, data = null) {
-    return {
-      headers: this.httpHeaders,
-      // params: this.parseURLParams(url, params),
-    };
   }
 }
