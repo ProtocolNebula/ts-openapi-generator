@@ -15,7 +15,7 @@ export const argumentsInstance = yargs
   })
   .describe(
     'config-file',
-    'Configuration file to use (values from cli will overwrite the files one).',
+    'Configuration file to use (values from cli will overwrite this file).',
   )
   .default('save-file', './openapi_temp')
 
@@ -39,8 +39,7 @@ export const argumentsInstance = yargs
   .alias('t', 'template')
   .describe('template', 'Template (preset) name or path to a template')
 
-  .implies('file', 'output-folder')
-  .implies('file', 'template')
+  .implies('template', 'output-folder')
   .describe(
     'output-folder',
     'Specify the output folder (generated folders will be replaced)',
