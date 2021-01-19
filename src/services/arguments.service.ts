@@ -47,6 +47,24 @@ export const argumentsInstance = yargs
   )
   .default('output-folder', 'output')
 
+  // Mock generator
+  .nargs('mock-generator', 1)
+  .describe(
+    'mock-generator',
+    'Specify the generator to use to generate mocks. If none provider, mocks will not be generated',
+  )
+  .nargs('mock-output', 1)
+  .describe(
+    'mock-output',
+    'The path where mock will be generated. If no specified, output-folder/mock will be used',
+  )
+  .boolean('mock-partial')
+  .describe(
+    'mock-partial',
+    'If true, only mock data will be generated instead of all files',
+  )
+  .default('mock-partial', false)
+
   .boolean('clean')
   .describe('clean', 'No clean the output-folder, so old files will remain')
   .default('clean', true)

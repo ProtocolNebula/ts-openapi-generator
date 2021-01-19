@@ -1,5 +1,6 @@
 import { existsSync } from 'fs';
 import { resolve as pathResolve } from 'path';
+import { ConfigMockI, ConfigMockModel } from './config-mock.model';
 import { TemplateConfigModel } from './template-config.model';
 
 export interface ConfigI {
@@ -8,6 +9,7 @@ export interface ConfigI {
   outputPath: string;
   tempFilePath: string;
   template: string;
+  mock?: ConfigMockI,
 
   readonly exportPath: string;
   readonly outputApisPath: string;
@@ -26,6 +28,7 @@ class ConfigModel implements ConfigI {
   private _template: string;
   private _templatePath: string;
   private _templateConfig: TemplateConfigModel;
+  private _mockConfig: ConfigMockI;
 
   fileURI: string;
   cleanFolder: boolean;
@@ -58,9 +61,6 @@ class ConfigModel implements ConfigI {
   }
 
   get template(): string {
-    if (!this._template) {
-      throw 'No template defined';
-    }
     return this._template;
   }
 
@@ -71,6 +71,7 @@ class ConfigModel implements ConfigI {
   }
 
   get templatePath(): string {
+    if (!this.template) { return null; }
     if (!this._templatePath) {
       // Generate the template path
       const template = this.template;
@@ -102,6 +103,13 @@ class ConfigModel implements ConfigI {
     return this._templateConfig;
   }
 
+  get mockConfig(): ConfigMockI {
+    return this._mockConfig;
+  }
+  set mockConfig(config: ConfigMockI) {
+    this._mockConfig = config;;
+  }
+
   constructor() {}
 
   setConfig(config: ConfigI) {
@@ -131,6 +139,10 @@ class ConfigModel implements ConfigI {
     }
     if (this.cleanFolder === undefined || yargs.clean === false) {
       config.cleanFolder = yargs.clean;
+    }
+    if (yargs.mockGenerator) {
+      config.mock = new ConfigMockModel();
+      config.mock.parseYargs(yargs);
     }
     this.setConfig(config);
   }
