@@ -1,8 +1,14 @@
+import { resolve as pathResolve } from 'path';
+import { Store } from '../stores/entities.store';
+import { resolvePluggablePath } from '../utils/files.util';
+import { config } from './config.model';
+import { MockGenerator } from './entities';
 
 export interface ConfigMockI {
   generator: string;
   output: string;
   partial: boolean;
+  generateBuilder(): MockGenerator;
   parseYargs(yargs): void;
 }
 
@@ -32,13 +38,27 @@ export class ConfigMockModel implements ConfigMockI {
     this._partial = partial;
   }
 
+  generateBuilder(): MockGenerator {
+    if (!this.generator) {
+      throw 'No generator defined for Mocks';
+    }
+    const generatorPath = resolvePluggablePath(
+      this.generator,
+      'mock-generators',
+    );
+    console.debug(`Loading generator from ${generatorPath}`);
+    const generatorClass = require(generatorPath).default;
+    const generator = new generatorClass();
+    generator.config = config;
+    generator.store = Store;
+    return generator;
+  }
+
   parseYargs(yargs): void {
     if (yargs.mockGenerator) {
       this.generator = yargs.mockGenerator;
     }
-    if (yargs.mockOutput) {
-      this.output = yargs.mockOutput;
-    }
+    this.output = yargs.mockOutput || pathResolve(yargs.output, 'mocks');
     if (yargs.mockPartial) {
       this.partial = yargs.mockPartial;
     }

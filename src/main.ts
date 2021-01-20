@@ -18,7 +18,7 @@ export async function generateAPIFiles(config: ConfigI) {
       console.log('Removing previously generated data...');
       fs.removeSync(config.exportPath);
     } else {
-      console.log('no-clean flag recevived, clean folder skipped');
+      console.log('no-clean flag received, clean folder skipped');
     }
     console.log('');
 
@@ -36,12 +36,24 @@ export async function generateAPIFiles(config: ConfigI) {
     console.info('Read complete');
 
     console.info('');
-    console.info('Generating files');
-    const modelWritter = new ModelWritterService(Store, config);
-    modelWritter.write();
-    const apiWritter = new ApiWritterService(Store, config);
-    apiWritter.write();
-    console.info('Files generation finished');
+    if (config.template) {
+      console.info('Generating files');
+      const modelWritter = new ModelWritterService(Store, config);
+      modelWritter.write();
+      const apiWritter = new ApiWritterService(Store, config);
+      apiWritter.write();
+      console.info('Files generation finished');
+    } else {
+      console.info('No template specified, no APIs/MODELs will be generated');
+    }
+
+    if (config.mock) {
+      console.info('Generating mock files');
+      const generator = config.mock.generateBuilder();
+      await generator.generate();
+      console.log();
+      console.info('Mock files generation finished');
+    }
 
     console.log();
   } catch (exception) {
