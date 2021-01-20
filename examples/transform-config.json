@@ -3,5 +3,7 @@
   "file": "./examples/openApiFiles/passportescaperoom.com.json",
   "outputFolder": "./examples/generated/angular2",
   "template": "angular2",
+  "mock-generator": "json-server",
+  "mock-output": "examples/generated/mocks/json-server",
   "saveFile": "./openApiFiles/passportescaperoom.com"
 }

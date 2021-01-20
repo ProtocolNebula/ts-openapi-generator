@@ -88,7 +88,7 @@
   "husky": {
     "hooks": {
       "pre-commit": "pretty-quick --staged",
-      "pre-push": "npm run generate:examples && (git add examples/ && git commit -m 'Updated examples' || echo 'No example changes')"
+      "pre-push": "npm run generate:examples && (git checkout -- examples/generated/mocks/json-server/db.json && git add examples/ && git commit -m 'Updated examples' || echo 'No example changes')"
     }
   }
 }
