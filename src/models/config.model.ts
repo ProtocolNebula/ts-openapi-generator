@@ -1,5 +1,5 @@
-import { existsSync } from 'fs';
 import { resolve as pathResolve } from 'path';
+import { resolvePluggablePath } from '../utils/files.util';
 import { ConfigMockI, ConfigMockModel } from './config-mock.model';
 import { TemplateConfigModel } from './template-config.model';
 
@@ -73,23 +73,7 @@ class ConfigModel implements ConfigI {
   get templatePath(): string {
     if (!this.template) { return null; }
     if (!this._templatePath) {
-      // Generate the template path
-      const template = this.template;
-      if (existsSync(template)) {
-        this._templatePath = template;
-      } else {
-        this._templatePath = pathResolve(
-          __dirname,
-          '..',
-          '..',
-          'templates',
-          template,
-        );
-      }
-    }
-
-    if (!existsSync(this._templatePath)) {
-      throw `Template ${this.template} not exist`;
+      this._templatePath = resolvePluggablePath(this.template, 'templates');
     }
     return this._templatePath;
   }
