@@ -1,10 +1,11 @@
 import {
+  copySync,
   createWriteStream,
   existsSync,
   readdirSync,
   readFileSync,
-  writeFileSync
-} from 'fs';
+  writeFileSync,
+} from 'fs-extra';
 import * as http from 'http';
 import * as https from 'https';
 import * as yaml from 'js-yaml';
@@ -24,18 +25,16 @@ const isHttpsRegex = /^https/i;
  * @returns The resolved path to the resource
  * @throws Exception if path not exist or not found
  */
-export function resolvePluggablePath(elementPath: string, internalPath: string) {
+export function resolvePluggablePath(
+  elementPath: string,
+  internalPath: string,
+) {
   // Generate the template path
   if (existsSync(elementPath)) {
     return elementPath;
   }
 
-  const resolvedPath = pathResolve(
-    __dirname,
-    '..',
-    internalPath,
-    elementPath,
-  );
+  const resolvedPath = pathResolve(__dirname, '..', internalPath, elementPath);
   if (existsSync(resolvedPath)) {
     return resolvedPath;
   }
@@ -51,6 +50,24 @@ export function getAllFoldersFrom(path) {
 
 export function makeDir(dest): void {
   mkdirSync(dest);
+}
+
+
+function copyDirFilter(src, dst): boolean {
+  return dst.indexOf('node_modules') === -1;
+}
+
+export function copyDir(
+  src: string,
+  dest: string,
+  overwrite: boolean = false,
+): void {
+  console.debug('Copying', src, 'to', dest);
+  copySync(src, dest, {
+    overwrite: true,
+    errorOnExist: true,
+    filter: copyDirFilter,
+  });
 }
 
 export async function downloadFile(url, dest): Promise<string> {
