@@ -21,11 +21,12 @@
   "types": "dist/cli.d.ts",
   "scripts": {
     "prepublish": "npm run build",
-    "copy-pluggable-files": "copyfiles -u 1 src/mock-generators/**/assets/**/* src/templates/**/* build/",
+    "copy-pluggable-files": "npx copyfiles -u 1 -a \"./src/mock-generators/**/assets/**/*\" \".src/templates/**/*\" \"./build/\"",
     "start": "ts-node src/cli",
     "start:dev": "npx nodemon",
     "start:build": "node build/index.js",
     "start:webpack": "npx webpack --watch",
+    "prebuild": "fse-remove ./build",
     "build": "tsc",
     "postbuild": "npm run copy-pluggable-files",
     "build:webpack": "npx webpack --mode production",
@@ -58,6 +59,7 @@
     "email": "project@hostname.com"
   },
   "dependencies": {
+    "@atao60/fse-cli": "0.0.39",
     "api-spec-converter": "^2.11.2",
     "case": "^1.6.1",
     "casual": "^1.6.2",
