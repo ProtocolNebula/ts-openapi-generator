@@ -22,7 +22,7 @@ export class ApiWritterService {
     const folder = this.configuration.outputApisPath;
     makeDir(folder);
 
-    const groups = this.store.apis.sort().apisGrouped;
+    const groups = this.store.apis.apisGrouped;
     for (const groupName in groups) {
       const apis = groups[groupName];
       const exportFileName = `${groupName}.${this.exportExtension}`;
@@ -39,7 +39,9 @@ export class ApiWritterService {
   }
 
   private prepareMustacheInstance(): void {
-    this.mustacheTemplate = getTemplate(this.configuration.templateConfig.apiFile);
+    this.mustacheTemplate = getTemplate(
+      this.configuration.templateConfig.apiFile,
+    );
     mustache.parse(this.mustacheTemplate);
     this.exportExtension = this.configuration.templateConfig.apiExtension;
   }

@@ -19,6 +19,7 @@ export class APIParserService extends ParserBaseService {
       this.parseVerbs(rawModel, url);
       console.groupEnd();
     }
+    this.store.apis.sort();
     console.groupEnd();
   }
 
