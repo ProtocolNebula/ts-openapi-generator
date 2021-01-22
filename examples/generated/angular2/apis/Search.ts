@@ -4,9 +4,11 @@
 // Angular dependences
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+import { map } from 'rxjs/operators';
 
 // Main dependences
 import { ApiBaseService } from '../../ApiBase/api-base.service';
+import { recursiveInstance, recursiveStringfy } from '../../ApiBase/model-base.model';
 
 // Models dependences
 import { GetSearchSearchRoomsParams } from '../models/get-search-search-rooms-params';
@@ -33,8 +35,13 @@ export class SearchService {
     return this.apiService.doGet(
       '/private/search/rooms',
       uriOptions,
-      null
-    );
+      null,
+      null,
+      // {  },
+    )
+      .pipe(
+        map(response => recursiveInstance(RoomEscapeDTO, response))
+      );
   }
 
   /**
@@ -46,8 +53,13 @@ export class SearchService {
     return this.apiService.doGet(
       '/private/search/users',
       uriOptions,
-      null
-    );
+      null,
+      null,
+      // {  },
+    )
+      .pipe(
+        map(response => recursiveInstance(UserSearchResultDTO, response))
+      );
   }
 
 }

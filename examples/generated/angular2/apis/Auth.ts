@@ -4,9 +4,11 @@
 // Angular dependences
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+import { map } from 'rxjs/operators';
 
 // Main dependences
 import { ApiBaseService } from '../../ApiBase/api-base.service';
+import { recursiveInstance, recursiveStringfy } from '../../ApiBase/model-base.model';
 
 // Models dependences
 import { LoginRequest } from '../models/login-request';
@@ -31,8 +33,13 @@ export class AuthService {
     return this.apiService.doGet(
       '/auth/profile',
       null,
-      null
-    );
+      null,
+      null,
+      // {  },
+    )
+      .pipe(
+        map(response => recursiveInstance(UserAuthResponse, response))
+      );
   }
 
   /**
@@ -44,8 +51,13 @@ export class AuthService {
     return this.apiService.doPost(
       '/auth/login',
       null,
-      requestBody
-    );
+      recursiveStringfy(requestBody),
+      null,
+      // {  headers: { 'Content-Type': 'application/json' }  },
+    )
+      .pipe(
+        map(response => recursiveInstance(UserAuthResponse, response))
+      );
   }
 
   /**
@@ -57,8 +69,13 @@ export class AuthService {
     return this.apiService.doPost(
       '/auth/social',
       null,
-      requestBody
-    );
+      recursiveStringfy(requestBody),
+      null,
+      // {  headers: { 'Content-Type': 'application/json' }  },
+    )
+      .pipe(
+        map(response => recursiveInstance(UserAuthResponse, response))
+      );
   }
 
 }

@@ -4,9 +4,11 @@
 // Angular dependences
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+import { map } from 'rxjs/operators';
 
 // Main dependences
 import { ApiBaseService } from '../../ApiBase/api-base.service';
+import { recursiveInstance, recursiveStringfy } from '../../ApiBase/model-base.model';
 
 // Models dependences
 import { FillRequest } from '../models/fill-request';
@@ -30,7 +32,9 @@ export class FillingManageService {
     return this.apiService.doPost(
       '/private/booking/manage/fill',
       null,
-      requestBody
+      recursiveStringfy(requestBody),
+      null,
+      // {  headers: { 'Content-Type': 'application/json' }  },
     );
   }
 

@@ -4,9 +4,11 @@
 // Angular dependences
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+import { map } from 'rxjs/operators';
 
 // Main dependences
 import { ApiBaseService } from '../../ApiBase/api-base.service';
+import { recursiveInstance, recursiveStringfy } from '../../ApiBase/model-base.model';
 
 // Models dependences
 import { BookingElementsWithDiscount } from '../models/booking-elements-with-discount';
@@ -33,7 +35,9 @@ export class BookingManageDiscountsService {
     return this.apiService.doPost(
       '/private/booking/manage/discounts/create',
       null,
-      requestBody
+      recursiveStringfy(requestBody),
+      null,
+      // {  headers: { 'Content-Type': 'application/json' }  },
     );
   }
 
@@ -46,8 +50,13 @@ export class BookingManageDiscountsService {
     return this.apiService.doPost(
       '/private/booking/manage/discounts/',
       null,
-      requestBody
-    );
+      recursiveStringfy(requestBody),
+      null,
+      // {  headers: { 'Content-Type': 'application/json' }  },
+    )
+      .pipe(
+        map(response => recursiveInstance(BookingElementsWithDiscount, response))
+      );
   }
 
   /**
@@ -59,7 +68,9 @@ export class BookingManageDiscountsService {
     return this.apiService.doPost(
       '/private/booking/manage/discounts/remove',
       null,
-      requestBody
+      recursiveStringfy(requestBody),
+      null,
+      // {  headers: { 'Content-Type': 'application/json' }  },
     );
   }
 

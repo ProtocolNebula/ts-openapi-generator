@@ -4,9 +4,11 @@
 // Angular dependences
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+import { map } from 'rxjs/operators';
 
 // Main dependences
 import { ApiBaseService } from '../../ApiBase/api-base.service';
+import { recursiveInstance, recursiveStringfy } from '../../ApiBase/model-base.model';
 
 // Models dependences
 import { GameStatusResponse } from '../models/game-status-response';
@@ -33,8 +35,13 @@ export class GameService {
     return this.apiService.doPost(
       '/private/game/cancel',
       null,
-      null
-    );
+      null,
+      null,
+      // {  },
+    )
+      .pipe(
+        map(response => recursiveInstance(GameStatusResponse, response))
+      );
   }
 
   /**
@@ -46,8 +53,13 @@ export class GameService {
     return this.apiService.doGet(
       '/private/game/status',
       uriOptions,
-      null
-    );
+      null,
+      null,
+      // {  },
+    )
+      .pipe(
+        map(response => recursiveInstance(GameStatusResponse, response))
+      );
   }
 
   /**
@@ -59,8 +71,13 @@ export class GameService {
     return this.apiService.doPost(
       '/private/game/rate',
       null,
-      requestBody
-    );
+      recursiveStringfy(requestBody),
+      null,
+      // {  headers: { 'Content-Type': 'application/json' }  },
+    )
+      .pipe(
+        map(response => recursiveInstance(GameStatusResponse, response))
+      );
   }
 
   /**
@@ -72,8 +89,13 @@ export class GameService {
     return this.apiService.doPost(
       '/private/game/start',
       null,
-      requestBody
-    );
+      recursiveStringfy(requestBody),
+      null,
+      // {  headers: { 'Content-Type': 'application/json' }  },
+    )
+      .pipe(
+        map(response => recursiveInstance(GameStatusResponse, response))
+      );
   }
 
   /**
@@ -85,8 +107,13 @@ export class GameService {
     return this.apiService.doPost(
       '/private/game/validate',
       null,
-      requestBody
-    );
+      recursiveStringfy(requestBody),
+      null,
+      // {  headers: { 'Content-Type': 'application/json' }  },
+    )
+      .pipe(
+        map(response => recursiveInstance(GameStatusResponse, response))
+      );
   }
 
 }
