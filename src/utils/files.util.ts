@@ -1,9 +1,11 @@
 import {
+  copySync,
   createWriteStream,
+  existsSync,
   readdirSync,
   readFileSync,
   writeFileSync,
-} from 'fs';
+} from 'fs-extra';
 import * as http from 'http';
 import * as https from 'https';
 import * as yaml from 'js-yaml';
@@ -14,6 +16,32 @@ import { config } from '../models/config.model';
 const getExtensionRegex = /(\.[a-z0-9]+).*/i;
 const isHttpsRegex = /^https/i;
 
+/**
+ * Find a resource for a pluggable element (like templates)
+ * @param elementPath Element to find (template name, ...)
+ * @param internalPath Path starting root (src/ parent folder) in case elementPath path not exists
+ *  This will be concated elementPath: `${internalPath}/${elementPath}`
+ * @example resolvePluggablePath('angular2', 'templates');
+ * @returns The resolved path to the resource
+ * @throws Exception if path not exist or not found
+ */
+export function resolvePluggablePath(
+  elementPath: string,
+  internalPath: string,
+) {
+  // Generate the template path
+  if (existsSync(elementPath)) {
+    return elementPath;
+  }
+
+  const resolvedPath = pathResolve(__dirname, '..', internalPath, elementPath);
+  if (existsSync(resolvedPath)) {
+    return resolvedPath;
+  }
+
+  throw `Pluggable path for ${elementPath} not found`;
+}
+
 export function getAllFoldersFrom(path) {
   return readdirSync(path, { withFileTypes: true })
     .filter((el) => el.isDirectory())
@@ -22,6 +50,24 @@ export function getAllFoldersFrom(path) {
 
 export function makeDir(dest): void {
   mkdirSync(dest);
+}
+
+
+function copyDirFilter(src, dst): boolean {
+  return dst.indexOf('node_modules') === -1;
+}
+
+export function copyDir(
+  src: string,
+  dest: string,
+  overwrite: boolean = false,
+): void {
+  console.debug('Copying', src, 'to', dest);
+  copySync(src, dest, {
+    overwrite: true,
+    errorOnExist: true,
+    filter: copyDirFilter,
+  });
 }
 
 export async function downloadFile(url, dest): Promise<string> {

@@ -6,6 +6,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.5.0] - 2021-01-23 (MOCK GENERATOR BETA)
+> This change add some beta features (but are stable).
+
+### Added
+- Engine to generate a `mock server` (the task is done after write all files).
+- `json-server` for the `mock engine` (beta).
+- Method to resolve "pluggable" elements (`resolvePluggablePath`).
+
+### Changes
+- Core template paths (default templates) are moved inside `src` to be coherent with the `mock engine` and also add native support for TS (future versions).
+- The "pluggable" folders now are coppied to the `build` folder to be published within the package, otherwise the `templates` will be ignored from this version and also the `mock assets`.
+- Specify `template` (and `output-folder`) is now **optional**, so you can create `mocks` without generate all files.
+  - Also you can simply launch this script to check if the `json/yaml` document is "well formed" (compatible with the script, there are some missing OpenAPI 3 features not added yet).
+- Now `build` folder is empty before each compilation.
+
 ## [2.4.0] - 2021-01-18
 > This can break your `angular 2` app, now all APIs require a model instance.
 > Also returns an instance, this can be a big break change, please test your app after build (in another branch) and fix all manually.

@@ -4,9 +4,11 @@
 // Angular dependences
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+import { map } from 'rxjs/operators';
 
 // Main dependences
 import { ApiBaseService } from '../../ApiBase/api-base.service';
+import { recursiveInstance, recursiveStringfy } from '../../ApiBase/model-base.model';
 
 // Models dependences
 import { ListDefaultBookingRequest } from '../models/list-default-booking-request';
@@ -32,7 +34,9 @@ export class BookingManageAvailabilityService {
     return this.apiService.doPost(
       '/private/booking/manage/availability/listDefault',
       null,
-      requestBody
+      recursiveStringfy(requestBody),
+      null,
+      // {  headers: { 'Content-Type': 'application/json' }  },
     );
   }
 
@@ -45,8 +49,13 @@ export class BookingManageAvailabilityService {
     return this.apiService.doPost(
       '/private/booking/manage/availability/saveDefault',
       null,
-      requestBody
-    );
+      recursiveStringfy(requestBody),
+      null,
+      // {  headers: { 'Content-Type': 'application/json' }  },
+    )
+      .pipe(
+        map(response => recursiveInstance(RoomPriceSectionDTO, response))
+      );
   }
 
 }

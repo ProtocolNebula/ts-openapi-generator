@@ -15,7 +15,7 @@ export const argumentsInstance = yargs
   })
   .describe(
     'config-file',
-    'Configuration file to use (values from cli will overwrite the files one).',
+    'Configuration file to use (values from cli will overwrite this file).',
   )
   .default('save-file', './openapi_temp')
 
@@ -39,13 +39,30 @@ export const argumentsInstance = yargs
   .alias('t', 'template')
   .describe('template', 'Template (preset) name or path to a template')
 
-  .implies('file', 'output-folder')
-  .implies('file', 'template')
+  .implies('template', 'output-folder')
   .describe(
     'output-folder',
     'Specify the output folder (generated folders will be replaced)',
   )
   .default('output-folder', 'output')
+
+  // Mock generator
+  .nargs('mock-generator', 1)
+  .describe(
+    'mock-generator',
+    'Specify the generator to use to generate mocks. If none provider, mocks will not be generated',
+  )
+  .nargs('mock-output', 1)
+  .describe(
+    'mock-output',
+    'The path where mock will be generated. If no specified, output-folder/mock will be used',
+  )
+  .boolean('mock-partial')
+  .describe(
+    'mock-partial',
+    'If true, only mock data will be generated instead of all files',
+  )
+  .default('mock-partial', false)
 
   .boolean('clean')
   .describe('clean', 'No clean the output-folder, so old files will remain')

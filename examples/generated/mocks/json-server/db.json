@@ -1,0 +1,225 @@
+{
+  "_private_booking_manage_book": {
+    "comission_percentage": 66,
+    "id": 90,
+    "players": 88,
+    "price": 2,
+    "room_id": 16,
+    "status": 4,
+    "user_id": 3
+  },
+  "_private_booking_manage_cancel": {
+    "comission_percentage": 7,
+    "id": 97,
+    "players": 34,
+    "price": 44,
+    "room_id": 17,
+    "status": 72,
+    "user_id": 33
+  },
+  "_private_game_cancel": {
+    "creation_date_time": "quia",
+    "id": 82,
+    "message": "ducimus",
+    "room_id": "et",
+    "room_name": "alias",
+    "status": "END"
+  },
+  "_private_booking_manage_roomPrices_create": {
+    "id": 64,
+    "name": "Miss Scarlett Hauck",
+    "room_id": 5
+  },
+  "_private_direction_country_list": {
+    "id": 23,
+    "local_name": 50,
+    "name": "Mrs. Raquel Schaefer"
+  },
+  "_private_booking_manage_discounts_": {
+    "datetime": "et",
+    "discount_percent": 14,
+    "id": 42,
+    "status": 94
+  },
+  "_private_direction_province_list": {
+    "country": "Senegal",
+    "id": 29,
+    "name": "Dr. Violette Bosco"
+  },
+  "_private_booking_manage_roomPrices_": {
+    "id": 2,
+    "name": "Miss Carolyne Effertz",
+    "room_id": 29
+  },
+  "_private_game_status": {
+    "creation_date_time": "quia",
+    "id": 9,
+    "message": "vitae",
+    "room_id": "omnis",
+    "room_name": "quibusdam",
+    "status": "NO_GAME"
+  },
+  "_auth_profile": {
+    "direction": {
+      "country": "Latvia",
+      "province": 23
+    },
+    "profile": {
+      "perfil_publico": false,
+      "played_rooms": false,
+      "time_played": false
+    },
+    "ranking": {
+      "completed_rooms": 61,
+      "extra_points": 11,
+      "league": 53,
+      "league_description": "incidunt",
+      "position_country": 42,
+      "position_league": 28,
+      "position_province": 23,
+      "time_played": 91
+    },
+    "token": "fuga",
+    "user": {
+      "avatar": "architecto",
+      "email": "Kohler.Fletcher@gmail.com",
+      "id": "corrupti",
+      "lastname": "modi",
+      "name": "Ms. Jaiden Cassin",
+      "type": 53,
+      "user": "vero"
+    }
+  },
+  "_private_booking_manage_list": {
+    "comission_percentage": 56,
+    "id": 17,
+    "players": 33,
+    "price": 74,
+    "room_id": 4,
+    "status": 77,
+    "user_id": 54
+  },
+  "_private_owner_rooms_list": {
+    "country": "Hungary",
+    "id": 58,
+    "max_players": 91,
+    "name": "Ms. Charlotte Romaguera",
+    "province": 34
+  },
+  "_private_booking_manage_roomPrices_listSection": {
+    "max_players": 79,
+    "price_total": 49,
+    "section_id": 67
+  },
+  "_auth_login": {
+    "direction": {
+      "country": "Burundi",
+      "province": 33
+    },
+    "profile": {
+      "perfil_publico": true,
+      "played_rooms": true,
+      "time_played": true
+    },
+    "ranking": {
+      "completed_rooms": 11,
+      "extra_points": 24,
+      "league": 41,
+      "league_description": "consequuntur",
+      "position_country": 41,
+      "position_league": 63,
+      "position_province": 33,
+      "time_played": 31
+    },
+    "token": "aliquid",
+    "user": {
+      "avatar": "architecto",
+      "email": "Treva.Buckridge@hotmail.com",
+      "id": "cupiditate",
+      "lastname": "commodi",
+      "name": "Mr. Jack Schaefer",
+      "type": 24,
+      "user": "iusto"
+    }
+  },
+  "_private_game_rate": {
+    "creation_date_time": "quisquam",
+    "id": 43,
+    "message": "exercitationem",
+    "room_id": "exercitationem",
+    "room_name": "aspernatur",
+    "status": "END"
+  },
+  "_private_booking_manage_availability_saveDefault": {
+    "id": 64,
+    "name": "Mrs. Juvenal Cremin",
+    "room_id": 57
+  },
+  "_private_search_rooms": {
+    "country": "Svalbard & Jan Mayen Islands",
+    "id": 16,
+    "max_players": 88,
+    "name": "Mrs. Marquis Miller",
+    "province": 45
+  },
+  "_private_search_users": {
+    "id": 36,
+    "nickname": "delectus"
+  },
+  "_auth_social": {
+    "direction": {
+      "country": "Kiribati",
+      "province": 98
+    },
+    "profile": {
+      "perfil_publico": false,
+      "played_rooms": false,
+      "time_played": true
+    },
+    "ranking": {
+      "completed_rooms": 49,
+      "extra_points": 67,
+      "league": 32,
+      "league_description": "voluptatem",
+      "position_country": 32,
+      "position_league": 25,
+      "position_province": 52,
+      "time_played": 90
+    },
+    "token": "et",
+    "user": {
+      "avatar": "rem",
+      "email": "Peter.Denesik@yahoo.com",
+      "id": "sit",
+      "lastname": "quia",
+      "name": "Mrs. Cristopher Wolff",
+      "type": 52,
+      "user": "id"
+    }
+  },
+  "_private_game_start": {
+    "creation_date_time": "nobis",
+    "id": 59,
+    "message": "soluta",
+    "room_id": "porro",
+    "room_name": "dicta",
+    "status": "PENDING_VALORATION"
+  },
+  "_private_booking_manage_status": {
+    "comission_percentage": 95,
+    "id": 38,
+    "players": 52,
+    "price": 3,
+    "room_id": 61,
+    "status": 70,
+    "user_id": 85
+  },
+  "_private_game_validate": {
+    "creation_date_time": "aut",
+    "id": 16,
+    "message": "libero",
+    "room_id": "explicabo",
+    "room_name": "iusto",
+    "status": "END"
+  }
+}

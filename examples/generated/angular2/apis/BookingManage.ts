@@ -4,9 +4,11 @@
 // Angular dependences
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+import { map } from 'rxjs/operators';
 
 // Main dependences
 import { ApiBaseService } from '../../ApiBase/api-base.service';
+import { recursiveInstance, recursiveStringfy } from '../../ApiBase/model-base.model';
 
 // Models dependences
 import { BookBookingRequest } from '../models/book-booking-request';
@@ -34,8 +36,13 @@ export class BookingManageService {
     return this.apiService.doPost(
       '/private/booking/manage/book',
       null,
-      requestBody
-    );
+      recursiveStringfy(requestBody),
+      null,
+      // {  headers: { 'Content-Type': 'application/json' }  },
+    )
+      .pipe(
+        map(response => recursiveInstance(BookingRoomsDTO, response))
+      );
   }
 
   /**
@@ -47,8 +54,13 @@ export class BookingManageService {
     return this.apiService.doPost(
       '/private/booking/manage/cancel',
       null,
-      requestBody
-    );
+      recursiveStringfy(requestBody),
+      null,
+      // {  headers: { 'Content-Type': 'application/json' }  },
+    )
+      .pipe(
+        map(response => recursiveInstance(BookingRoomsDTO, response))
+      );
   }
 
   /**
@@ -60,8 +72,13 @@ export class BookingManageService {
     return this.apiService.doPost(
       '/private/booking/manage/list',
       null,
-      requestBody
-    );
+      recursiveStringfy(requestBody),
+      null,
+      // {  headers: { 'Content-Type': 'application/json' }  },
+    )
+      .pipe(
+        map(response => recursiveInstance(BookingRoomsDTO, response))
+      );
   }
 
   /**
@@ -73,8 +90,13 @@ export class BookingManageService {
     return this.apiService.doPost(
       '/private/booking/manage/status',
       null,
-      requestBody
-    );
+      recursiveStringfy(requestBody),
+      null,
+      // {  headers: { 'Content-Type': 'application/json' }  },
+    )
+      .pipe(
+        map(response => recursiveInstance(BookingRoomsDTO, response))
+      );
   }
 
 }

@@ -4,9 +4,11 @@
 // Angular dependences
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+import { map } from 'rxjs/operators';
 
 // Main dependences
 import { ApiBaseService } from '../../ApiBase/api-base.service';
+import { recursiveInstance, recursiveStringfy } from '../../ApiBase/model-base.model';
 
 // Models dependences
 import { CountryDTO } from '../models/country-dto';
@@ -31,8 +33,13 @@ export class DirectionService {
     return this.apiService.doGet(
       '/private/direction/country_list',
       null,
-      null
-    );
+      null,
+      null,
+      // {  },
+    )
+      .pipe(
+        map(response => recursiveInstance(CountryDTO, response))
+      );
   }
 
   /**
@@ -44,8 +51,13 @@ export class DirectionService {
     return this.apiService.doGet(
       '/private/direction/province_list',
       uriOptions,
-      null
-    );
+      null,
+      null,
+      // {  },
+    )
+      .pipe(
+        map(response => recursiveInstance(ProvinceDTO, response))
+      );
   }
 
 }
