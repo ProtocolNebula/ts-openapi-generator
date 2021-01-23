@@ -10,12 +10,16 @@
     "converter",
     "customizable",
     "generator",
+    "json-server",
+    "mock-generator",
+    "mock-server",
     "model",
     "openapi-specifications",
     "openapi",
     "swagger",
     "time-saver",
-    "tool"
+    "tool",
+    "typescript-openapi"
   ],
   "main": "dist/cli",
   "types": "dist/cli.d.ts",
