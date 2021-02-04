@@ -1,3 +1,5 @@
+import { USED_IN_ATTRIBUTE } from '@model/entities';
+import { ParameterStore } from '@src/stores/parameter.store';
 import { capital } from 'case';
 import { OpenAPIV3 } from 'openapi-types';
 import { EnumModel } from '../../../models/enum.model';
@@ -18,6 +20,21 @@ export abstract class ParserBaseService {
 
   get modelStore(): ModelStore {
     return this.store.models;
+  }
+
+  get parameterStore(): ParameterStore {
+    return this.store.parameters;
+  }
+
+  protected getParameterUsedInType(inValue: string): USED_IN_ATTRIBUTE {
+    switch (inValue) {
+      case 'query':
+      case 'param':
+        return inValue;
+      default:
+        console.error(`Parameter "in" ${inValue} not found. Query used.`);
+        return 'query';
+    }
   }
 
   protected isEnumObject(
@@ -81,26 +98,18 @@ export abstract class ParserBaseService {
    * @param schema
    * @param modelName Name for the model if is not a "ref"
    */
-  protected parseParameters(
+  protected parseApiParameters(
     parameters: (OpenAPIV3.ReferenceObject | OpenAPIV3.ParameterObject)[],
     modelName: string,
   ): ModelAttributessModel {
     const newModel = new ModelModel(modelName);
     for (const rawParameter of parameters) {
       if (this.isRefObject(rawParameter)) {
-        throw 'Not implemented REF OBJECT for parameterParser';
-        // const instance = new ModelAttributessModel(null);
-        // instance.typeURI = parameter.$ref;
-        // newModel.addAttribute(instance);
+        console.debug('Parameter object:', rawParameter.$ref);
+        const parameter = this.store.parameters.getByUri(rawParameter.$ref);
+        newModel.addAttribute(parameter.getAttribute());
       } else if (this.isParameterObject(rawParameter)) {
-        const parameter = new ModelAttributessModel(rawParameter.name);
-        parameter.typeURI = this.parseSchema(
-          rawParameter.schema,
-          capital(`${modelName} ${rawParameter.name}`, '', true),
-        )?.typeURI;
-        parameter.description = rawParameter.description;
-        parameter.deprecated = rawParameter.deprecated;
-        parameter.example = rawParameter.example;
+        const parameter = this.parseParameter(rawParameter, modelName);
         newModel.addAttribute(parameter);
       } else {
         throw 'No schema available for this schema';
@@ -114,6 +123,25 @@ export abstract class ParserBaseService {
     const instance = new ModelAttributessModel(null);
     instance.typeURI = newModel.uri;
     return instance;
+  }
+
+  protected parseParameter(
+    rawParameter: OpenAPIV3.ParameterObject,
+    modelName: string,
+  ): ModelAttributessModel {
+    const parameter = new ModelAttributessModel(rawParameter.name);
+    parameter.typeURI = this.parseSchema(
+      rawParameter.schema,
+      capital(`${modelName} ${rawParameter.name}`, '', true),
+    )?.typeURI;
+    parameter.usedIn = this.getParameterUsedInType(rawParameter.in);
+    parameter.description = rawParameter.description;
+    parameter.deprecated = rawParameter.deprecated;
+    parameter.example = rawParameter.example;
+    if (rawParameter.required) {
+      parameter.isOptional = false;
+    }
+    return parameter;
   }
 
   protected parseSchema(
@@ -199,6 +227,7 @@ export abstract class ParserBaseService {
       console.debug(`${attrName} is ref of ${rawAttribute.$ref}`);
       attribute.typeURI = rawAttribute.$ref;
     } else {
+      attribute.usedIn = this.getParameterUsedInType(rawAttribute.in);
       attribute.description = rawAttribute.description;
       attribute.example = rawAttribute.example;
       attribute.deprecated = rawAttribute.deprecated;
@@ -222,7 +251,9 @@ export abstract class ParserBaseService {
           attribute.typeURI = newModel.uri;
         } else if (rawAttribute.type === 'object' && rawAttribute.properties) {
           const newModel = new ModelModel(defaultName);
-          newModel.addAttributes(this.parseAttributes(rawAttribute, defaultName));
+          newModel.addAttributes(
+            this.parseAttributes(rawAttribute, defaultName),
+          );
           this.store.models.add(newModel);
           attribute.typeURI = newModel.uri;
         } else {

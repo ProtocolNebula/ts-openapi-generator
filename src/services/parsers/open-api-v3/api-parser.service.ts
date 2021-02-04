@@ -63,7 +63,7 @@ export class APIParserService extends ParserBaseService {
       console.debug(`No query parameters`);
       return;
     }
-    apiModel.queryParams = this.parseParameters(
+    apiModel.queryParams = this.parseApiParameters(
       parameters,
       getApiDefaultModelName(apiModel, 'Params'),
     );
