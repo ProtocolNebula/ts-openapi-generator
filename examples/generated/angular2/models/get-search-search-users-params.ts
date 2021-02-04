@@ -5,7 +5,7 @@ export interface GetSearchSearchUsersParamsI {
   /**
    * User nickname to find, at least 2 characters
    */
-  nickname?: string;
+  nickname: string;
 
 }
 

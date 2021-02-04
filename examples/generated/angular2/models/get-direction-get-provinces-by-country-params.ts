@@ -5,7 +5,7 @@ export interface GetDirectionGetProvincesByCountryParamsI {
   /**
    * Status values that need to be considered for filter
    */
-  country?: number;
+  country: number;
 
 }
 

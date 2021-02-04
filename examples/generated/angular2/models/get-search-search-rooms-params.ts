@@ -10,7 +10,7 @@ export interface GetSearchSearchRoomsParamsI {
   /**
    * At least 4 characters
    */
-  name?: string;
+  name: string;
 
   /**
    * ID of province (will ignore country)
