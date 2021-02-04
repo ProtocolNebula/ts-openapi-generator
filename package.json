@@ -25,7 +25,7 @@
   "types": "dist/cli.d.ts",
   "scripts": {
     "prepublish": "npm run build",
-    "copy-pluggable-files": "npx copyfiles -u 1 -a \"./src/mock-generators/**/assets/**/*\" \".src/templates/**/*\" \"./build/\"",
+    "copy-pluggable-files": "npx copyfiles -u 1 -a \"./src/mock-generators/**/assets/**/*\" \"./src/templates/**/*\" \"./build/\"",
     "start": "ts-node src/cli",
     "start:dev": "npx nodemon",
     "start:build": "node build/index.js",
