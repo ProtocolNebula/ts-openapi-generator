@@ -1,8 +1,10 @@
 import { getFixedTypeName } from '../utils/models.util';
+import { USED_IN_ATTRIBUTE } from './entities';
 import { ModelModel } from './model.model';
 
 export class ModelAttributessModel {
   name: string;
+  usedIn: USED_IN_ATTRIBUTE;
   description?: string;
   example?: string;
   deprecated?: boolean;
@@ -26,7 +28,7 @@ export class ModelAttributessModel {
   }
 
   get hasComments(): boolean {
-    return !!this.description || !!this.example || !!this.deprecated;
+    return !!this.description || !!this.example || !!this.deprecated;
   }
 
   /**
@@ -56,7 +58,6 @@ export class ModelAttributessModel {
   set model(model: ModelModel) {
     this._model = model;
   }
-
 
   /**
    * Return a fake array with "arrayLevels" elements to print it in mustache.js
