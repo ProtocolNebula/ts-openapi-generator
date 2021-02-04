@@ -6,6 +6,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.5.1] - 2021-02-04
+
+### Added
+- Parser for Components -> Parameters
+  - The parameters are added in a new store and are "copied" when are needed in the models or responses.
+- Added `$ref` support in the `Components`
+  - As the [standard specifies](https://swagger.io/docs/specification/using-ref/
+), it will COPY the referenced `$ref` object only changing the `model name`, so the other attributes are ignored.
+
+### Fixed
+- `copy-pluggable-files` command was broken, so templates were not copied to dist folder
+- Debugger tasks which call `copy-pluggable-files`
+
 ## [2.5.0] - 2021-01-23 (MOCK GENERATOR BETA)
 > This change add some beta features (but are stable).
 
