@@ -30,7 +30,7 @@
     "start:dev": "npx nodemon",
     "start:build": "node build/index.js",
     "start:webpack": "npx webpack --watch",
-    "prebuild": "fse-remove ./build",
+    "prebuild": "fse remove build",
     "build": "tsc",
     "postbuild": "npm run copy-pluggable-files",
     "build:webpack": "npx webpack --mode production",
