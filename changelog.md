@@ -13,6 +13,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `API Base` (angular 2):
   - Added `body` (data) for `patch` request
   - Fix `repsonseType` type for `HttpOptions`
+  - ModelBase `stringfy` now return parameters that are `false`
+  - ModelBase parse method fixed
 
 ## [2.5.1] - 2021-02-04
 
