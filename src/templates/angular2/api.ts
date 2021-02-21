@@ -53,7 +53,9 @@ export class {{groupName}}Service {
   #requestBodyType}}
     requestBody: {{.}},{{/requestBodyType
   }}
-  ): Observable<{{ responseType }}> {
+  ): Observable<{{ responseType }}{{
+    #responseArrayLevelsRepeater}}[]{{/responseArrayLevelsRepeater
+  }}> {
     return this.apiService.do{{verb}}(
       '{{{ url }}}',
       {{#queryParamsType}}uriOptions{{/queryParamsType}}{{^queryParamsType}}null{{/queryParamsType}},

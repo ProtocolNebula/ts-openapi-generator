@@ -36,6 +36,14 @@ export class ApiModel implements PhysycalFile {
     return !this.response || this.response?.typeIsPrimitive;
   }
 
+  get isResponseArray(): boolean {
+    return this.response?.isArray;
+  }
+
+  get responseArrayLevelsRepeater(): any[] {
+    return this.response?.arrayLevelsRepeater;
+  }
+
   get models(): ModelAttributessModel[] {
     return [this.queryParams, this.requestBody, this.response].filter(
       (el) => !!el,
@@ -58,7 +66,7 @@ export class ApiModel implements PhysycalFile {
   }
 
   get hasComments(): boolean {
-    return !!this.description || !!this.example || !!this.deprecated;
+    return !!this.description || !!this.example || !!this.deprecated;
   }
 
   get queryParamsType(): string {

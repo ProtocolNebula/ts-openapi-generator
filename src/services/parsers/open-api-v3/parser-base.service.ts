@@ -164,6 +164,7 @@ export abstract class ParserBaseService {
       if (schema.type === 'array') {
         const instance = this.parseSchema(schema.items, defaultName, mediaType);
         instance.isArray = true;
+        instance.arrayLevels++;
         return instance;
       }
 

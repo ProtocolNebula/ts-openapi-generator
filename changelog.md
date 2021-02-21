@@ -6,6 +6,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- Support for arrays in `api` responses.
+
 ## [2.5.1] - 2021-02-04
 
 ### Added
