@@ -68,7 +68,7 @@ export class BookingManageService {
   */
   public list(
     requestBody: ListBookingRequest,
-  ): Observable<BookingRoomsDTO> {
+  ): Observable<BookingRoomsDTO[]> {
     return this.apiService.doPost(
       '/private/booking/manage/list',
       null,

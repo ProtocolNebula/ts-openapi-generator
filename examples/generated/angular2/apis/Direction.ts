@@ -29,7 +29,7 @@ export class DirectionService {
    * Retrieve all available countries
   */
   public getCountries(
-  ): Observable<CountryDTO> {
+  ): Observable<CountryDTO[]> {
     return this.apiService.doGet(
       '/private/direction/country_list',
       null,
@@ -47,7 +47,7 @@ export class DirectionService {
   */
   public getProvincesByCountry(
     uriOptions: GetDirectionGetProvincesByCountryParams,
-  ): Observable<ProvinceDTO> {
+  ): Observable<ProvinceDTO[]> {
     return this.apiService.doGet(
       '/private/direction/province_list',
       uriOptions,

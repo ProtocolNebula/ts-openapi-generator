@@ -31,7 +31,7 @@ export class SearchService {
   */
   public searchRooms(
     uriOptions: GetSearchSearchRoomsParams,
-  ): Observable<RoomEscapeDTO> {
+  ): Observable<RoomEscapeDTO[]> {
     return this.apiService.doGet(
       '/private/search/rooms',
       uriOptions,
@@ -49,7 +49,7 @@ export class SearchService {
   */
   public searchUsers(
     uriOptions: GetSearchSearchUsersParams,
-  ): Observable<UserSearchResultDTO> {
+  ): Observable<UserSearchResultDTO[]> {
     return this.apiService.doGet(
       '/private/search/users',
       uriOptions,

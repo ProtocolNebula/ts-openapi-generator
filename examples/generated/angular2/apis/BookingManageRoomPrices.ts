@@ -85,7 +85,7 @@ export class BookingManageRoomPricesService {
   */
   public listSection(
     requestBody: ListSectionsBookingRequest,
-  ): Observable<RoomsPricesDTO> {
+  ): Observable<RoomsPricesDTO[]> {
     return this.apiService.doPost(
       '/private/booking/manage/roomPrices/listSection',
       null,

@@ -29,7 +29,7 @@ export class OwnerRoomsService {
   */
   public list(
     requestBody: ListRoomsRequest,
-  ): Observable<RoomEscapeDTO> {
+  ): Observable<RoomEscapeDTO[]> {
     return this.apiService.doPost(
       '/private/owner/rooms/list',
       null,
