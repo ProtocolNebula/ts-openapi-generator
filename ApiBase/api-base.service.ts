@@ -16,7 +16,7 @@ export interface HttpOptions {
         [param: string]: string | string[];
       };
   reportProgress?: boolean;
-  responseType?: 'json';
+  responseType?: any;
   withCredentials?: boolean;
 }
 
@@ -115,7 +115,7 @@ export class ApiBaseService {
   ): Observable<any> {
     const options = this.getOptions(customOptions);
     url = this.parseURLParams(url, params);
-    return this.http.patch(this.serverURL + url, options);
+    return this.http.patch(this.serverURL + url, data, options);
   }
 
   public doDelete(
