@@ -22,7 +22,7 @@ export function recursiveStringfy(model: any): any {
     paramsList = model;
   }
   for (const key in paramsList) {
-    if (!model[key]) {
+    if (model[key] === null || model[key] === undefined) {
       continue;
     }
     const value = model[key];
