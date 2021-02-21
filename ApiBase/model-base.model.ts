@@ -44,28 +44,36 @@ export abstract class ModelBase {
     if (!params) {
       return;
     }
-
+    if (typeof params?.json === 'function') {
+      params = params.json();
+    }
     for (const paramKey in params) {
       if (!params[paramKey]) {
         continue;
       }
       const paramValue = params[paramKey];
       if (this.PARAMS_MAPPER[paramKey]) {
-        this[paramKey] = this.parseParam(paramKey, paramValue);
+        // Parser will be executed by the setter
+        this[paramKey] = paramValue;
       }
     }
   }
 
   parseParam(key: string, value: any): any {
     const mapper = this.PARAMS_MAPPER[key];
-    if (
-      mapper &&
-      typeof mapper?.type === 'function' &&
-      typeof value !== 'function' &&
-      value?.__proto__?.constructor?.name !== 'Array'
-    ) {
+    if (!mapper) {
+      return value;
+    }
+    if (value?.__proto__?.constructor?.name === 'Array') {
+      if (value[0]?.constructor.name !== mapper.type?.name) {
+        return recursiveInstance(mapper.type, value);
+      }
+      return value;
+    }
+    if (typeof mapper?.type === 'function' && typeof value !== 'function') {
       return recursiveInstance(mapper.type, value);
     }
+
     return value;
   }
 
