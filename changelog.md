@@ -21,7 +21,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - `API Base` (angular 2):
-  - Now `false` values are send to Back End, previosly was ignored like `null` and `undefined`.
+  - Now `false` values are sent to Back End, previously was ignored like `null` and `undefined`.
 
 ## [2.5.3] - 2021-02-22
 
