@@ -105,6 +105,7 @@ export class APIParserService extends ParserBaseService {
     if (this.isResponseObject(response)) {
       const keys = Object.keys(response.content);
       const mainKey = keys[0];
+      apiModel.responseContentType = mainKey;
       apiModel.response = this.parseSchema(
         response.content[mainKey].schema,
         getApiDefaultModelName(apiModel, 'Response'),

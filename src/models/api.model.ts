@@ -18,6 +18,7 @@ export class ApiModel implements PhysycalFile {
   queryParams: ModelAttributessModel;
   requestContentType?: string;
   requestBody: ModelAttributessModel;
+  responseContentType?: string;
   response: ModelAttributessModel;
 
   get name(): string {
@@ -38,6 +39,26 @@ export class ApiModel implements PhysycalFile {
 
   get isResponseArray(): boolean {
     return this.response?.isArray;
+  }
+
+  get isResponseTypeText(): boolean {
+    return this.responseContentType?.indexOf('text/') === 0;
+  }
+
+  get isResponseTypeJson(): boolean {
+    return this.responseContentType === 'application/json';
+  }
+
+  get isResponseTypeXML(): boolean {
+    return this.responseContentType === 'application/xml';
+  }
+
+  get isResponseTypeFile(): boolean {
+    return (
+      !this.isResponseTypeText &&
+      !this.isResponseTypeJson &&
+      !this.isResponseTypeXML
+    );
   }
 
   get responseArrayLevelsRepeater(): any[] {
