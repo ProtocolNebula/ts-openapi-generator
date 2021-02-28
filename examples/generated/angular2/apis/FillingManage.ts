@@ -33,8 +33,10 @@ export class FillingManageService {
       '/private/booking/manage/fill',
       null,
       recursiveStringfy(requestBody),
-      null,
-      // {  headers: { 'Content-Type': 'application/json' }  },
+      {
+        // headers: { 'Content-Type': 'application/json' }
+        responseType: 'blob',
+      },
     );
   }
 

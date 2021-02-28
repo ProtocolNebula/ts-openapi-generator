@@ -36,8 +36,10 @@ export class SearchService {
       '/private/search/rooms',
       uriOptions,
       null,
-      null,
-      // {  },
+      {
+        
+        responseType: 'json',
+      },
     )
       .pipe(
         map(response => recursiveInstance(RoomEscapeDTO, response))
@@ -54,8 +56,10 @@ export class SearchService {
       '/private/search/users',
       uriOptions,
       null,
-      null,
-      // {  },
+      {
+        
+        responseType: 'json',
+      },
     )
       .pipe(
         map(response => recursiveInstance(UserSearchResultDTO, response))

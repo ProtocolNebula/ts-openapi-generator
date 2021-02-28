@@ -36,8 +36,10 @@ export class BookingManageDiscountsService {
       '/private/booking/manage/discounts/create',
       null,
       recursiveStringfy(requestBody),
-      null,
-      // {  headers: { 'Content-Type': 'application/json' }  },
+      {
+        // headers: { 'Content-Type': 'application/json' }
+        responseType: 'blob',
+      },
     );
   }
 
@@ -51,8 +53,10 @@ export class BookingManageDiscountsService {
       '/private/booking/manage/discounts/',
       null,
       recursiveStringfy(requestBody),
-      null,
-      // {  headers: { 'Content-Type': 'application/json' }  },
+      {
+        // headers: { 'Content-Type': 'application/json' }
+        responseType: 'json',
+      },
     )
       .pipe(
         map(response => recursiveInstance(BookingElementsWithDiscount, response))
@@ -69,8 +73,10 @@ export class BookingManageDiscountsService {
       '/private/booking/manage/discounts/remove',
       null,
       recursiveStringfy(requestBody),
-      null,
-      // {  headers: { 'Content-Type': 'application/json' }  },
+      {
+        // headers: { 'Content-Type': 'application/json' }
+        responseType: 'blob',
+      },
     );
   }
 

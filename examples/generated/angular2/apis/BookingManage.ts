@@ -37,8 +37,10 @@ export class BookingManageService {
       '/private/booking/manage/book',
       null,
       recursiveStringfy(requestBody),
-      null,
-      // {  headers: { 'Content-Type': 'application/json' }  },
+      {
+        // headers: { 'Content-Type': 'application/json' }
+        responseType: 'json',
+      },
     )
       .pipe(
         map(response => recursiveInstance(BookingRoomsDTO, response))
@@ -55,8 +57,10 @@ export class BookingManageService {
       '/private/booking/manage/cancel',
       null,
       recursiveStringfy(requestBody),
-      null,
-      // {  headers: { 'Content-Type': 'application/json' }  },
+      {
+        // headers: { 'Content-Type': 'application/json' }
+        responseType: 'json',
+      },
     )
       .pipe(
         map(response => recursiveInstance(BookingRoomsDTO, response))
@@ -73,8 +77,10 @@ export class BookingManageService {
       '/private/booking/manage/list',
       null,
       recursiveStringfy(requestBody),
-      null,
-      // {  headers: { 'Content-Type': 'application/json' }  },
+      {
+        // headers: { 'Content-Type': 'application/json' }
+        responseType: 'json',
+      },
     )
       .pipe(
         map(response => recursiveInstance(BookingRoomsDTO, response))
@@ -91,8 +97,10 @@ export class BookingManageService {
       '/private/booking/manage/status',
       null,
       recursiveStringfy(requestBody),
-      null,
-      // {  headers: { 'Content-Type': 'application/json' }  },
+      {
+        // headers: { 'Content-Type': 'application/json' }
+        responseType: 'json',
+      },
     )
       .pipe(
         map(response => recursiveInstance(BookingRoomsDTO, response))

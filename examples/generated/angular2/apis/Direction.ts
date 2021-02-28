@@ -34,8 +34,10 @@ export class DirectionService {
       '/private/direction/country_list',
       null,
       null,
-      null,
-      // {  },
+      {
+        
+        responseType: 'json',
+      },
     )
       .pipe(
         map(response => recursiveInstance(CountryDTO, response))
@@ -52,8 +54,10 @@ export class DirectionService {
       '/private/direction/province_list',
       uriOptions,
       null,
-      null,
-      // {  },
+      {
+        
+        responseType: 'json',
+      },
     )
       .pipe(
         map(response => recursiveInstance(ProvinceDTO, response))

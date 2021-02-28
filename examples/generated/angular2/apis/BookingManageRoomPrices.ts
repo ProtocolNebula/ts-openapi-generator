@@ -39,8 +39,10 @@ export class BookingManageRoomPricesService {
       '/private/booking/manage/roomPrices/create',
       null,
       recursiveStringfy(requestBody),
-      null,
-      // {  headers: { 'Content-Type': 'application/json' }  },
+      {
+        // headers: { 'Content-Type': 'application/json' }
+        responseType: 'json',
+      },
     )
       .pipe(
         map(response => recursiveInstance(RoomPriceSectionDTO, response))
@@ -57,8 +59,10 @@ export class BookingManageRoomPricesService {
       '/private/booking/manage/roomPrices/delete',
       null,
       recursiveStringfy(requestBody),
-      null,
-      // {  headers: { 'Content-Type': 'application/json' }  },
+      {
+        // headers: { 'Content-Type': 'application/json' }
+        responseType: 'blob',
+      },
     );
   }
 
@@ -72,8 +76,10 @@ export class BookingManageRoomPricesService {
       '/private/booking/manage/roomPrices/',
       null,
       recursiveStringfy(requestBody),
-      null,
-      // {  headers: { 'Content-Type': 'application/json' }  },
+      {
+        // headers: { 'Content-Type': 'application/json' }
+        responseType: 'json',
+      },
     )
       .pipe(
         map(response => recursiveInstance(RoomPriceSectionDTO, response))
@@ -90,8 +96,10 @@ export class BookingManageRoomPricesService {
       '/private/booking/manage/roomPrices/listSection',
       null,
       recursiveStringfy(requestBody),
-      null,
-      // {  headers: { 'Content-Type': 'application/json' }  },
+      {
+        // headers: { 'Content-Type': 'application/json' }
+        responseType: 'json',
+      },
     )
       .pipe(
         map(response => recursiveInstance(RoomsPricesDTO, response))
@@ -108,8 +116,10 @@ export class BookingManageRoomPricesService {
       '/private/booking/manage/roomPrices/update',
       null,
       recursiveStringfy(requestBody),
-      null,
-      // {  headers: { 'Content-Type': 'application/json' }  },
+      {
+        // headers: { 'Content-Type': 'application/json' }
+        responseType: 'blob',
+      },
     );
   }
 

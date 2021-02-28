@@ -36,8 +36,10 @@ export class GameService {
       '/private/game/cancel',
       null,
       null,
-      null,
-      // {  },
+      {
+        
+        responseType: 'json',
+      },
     )
       .pipe(
         map(response => recursiveInstance(GameStatusResponse, response))
@@ -54,8 +56,10 @@ export class GameService {
       '/private/game/status',
       uriOptions,
       null,
-      null,
-      // {  },
+      {
+        
+        responseType: 'json',
+      },
     )
       .pipe(
         map(response => recursiveInstance(GameStatusResponse, response))
@@ -72,8 +76,10 @@ export class GameService {
       '/private/game/rate',
       null,
       recursiveStringfy(requestBody),
-      null,
-      // {  headers: { 'Content-Type': 'application/json' }  },
+      {
+        // headers: { 'Content-Type': 'application/json' }
+        responseType: 'json',
+      },
     )
       .pipe(
         map(response => recursiveInstance(GameStatusResponse, response))
@@ -90,8 +96,10 @@ export class GameService {
       '/private/game/start',
       null,
       recursiveStringfy(requestBody),
-      null,
-      // {  headers: { 'Content-Type': 'application/json' }  },
+      {
+        // headers: { 'Content-Type': 'application/json' }
+        responseType: 'json',
+      },
     )
       .pipe(
         map(response => recursiveInstance(GameStatusResponse, response))
@@ -108,8 +116,10 @@ export class GameService {
       '/private/game/validate',
       null,
       recursiveStringfy(requestBody),
-      null,
-      // {  headers: { 'Content-Type': 'application/json' }  },
+      {
+        // headers: { 'Content-Type': 'application/json' }
+        responseType: 'json',
+      },
     )
       .pipe(
         map(response => recursiveInstance(GameStatusResponse, response))

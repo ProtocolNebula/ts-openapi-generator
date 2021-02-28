@@ -34,8 +34,10 @@ export class AuthService {
       '/auth/profile',
       null,
       null,
-      null,
-      // {  },
+      {
+        
+        responseType: 'json',
+      },
     )
       .pipe(
         map(response => recursiveInstance(UserAuthResponse, response))
@@ -52,8 +54,10 @@ export class AuthService {
       '/auth/login',
       null,
       recursiveStringfy(requestBody),
-      null,
-      // {  headers: { 'Content-Type': 'application/json' }  },
+      {
+        // headers: { 'Content-Type': 'application/json' }
+        responseType: 'json',
+      },
     )
       .pipe(
         map(response => recursiveInstance(UserAuthResponse, response))
@@ -70,8 +74,10 @@ export class AuthService {
       '/auth/social',
       null,
       recursiveStringfy(requestBody),
-      null,
-      // {  headers: { 'Content-Type': 'application/json' }  },
+      {
+        // headers: { 'Content-Type': 'application/json' }
+        responseType: 'json',
+      },
     )
       .pipe(
         map(response => recursiveInstance(UserAuthResponse, response))

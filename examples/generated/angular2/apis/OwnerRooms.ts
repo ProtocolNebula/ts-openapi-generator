@@ -34,8 +34,10 @@ export class OwnerRoomsService {
       '/private/owner/rooms/list',
       null,
       recursiveStringfy(requestBody),
-      null,
-      // {  headers: { 'Content-Type': 'application/json' }  },
+      {
+        // headers: { 'Content-Type': 'application/json' }
+        responseType: 'json',
+      },
     )
       .pipe(
         map(response => recursiveInstance(RoomEscapeDTO, response))

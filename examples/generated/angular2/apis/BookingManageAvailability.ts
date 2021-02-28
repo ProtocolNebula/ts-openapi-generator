@@ -35,8 +35,10 @@ export class BookingManageAvailabilityService {
       '/private/booking/manage/availability/listDefault',
       null,
       recursiveStringfy(requestBody),
-      null,
-      // {  headers: { 'Content-Type': 'application/json' }  },
+      {
+        // headers: { 'Content-Type': 'application/json' }
+        responseType: 'json',
+      },
     );
   }
 
@@ -50,8 +52,10 @@ export class BookingManageAvailabilityService {
       '/private/booking/manage/availability/saveDefault',
       null,
       recursiveStringfy(requestBody),
-      null,
-      // {  headers: { 'Content-Type': 'application/json' }  },
+      {
+        // headers: { 'Content-Type': 'application/json' }
+        responseType: 'json',
+      },
     )
       .pipe(
         map(response => recursiveInstance(RoomPriceSectionDTO, response))
