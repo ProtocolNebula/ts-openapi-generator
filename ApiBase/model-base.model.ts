@@ -48,7 +48,7 @@ export abstract class ModelBase {
       params = params.json();
     }
     for (const paramKey in params) {
-      if (!params[paramKey]) {
+      if (params[paramKey] === null || params[paramKey] === undefined) {
         continue;
       }
       const paramValue = params[paramKey];
