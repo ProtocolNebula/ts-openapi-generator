@@ -6,6 +6,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.5.4] - 2021-02-28
+
+### Added
+
+- Added support for response type:
+  This add new methods to "api model" template:
+  - isResponseTypeText
+  - isResponseTypeJson
+  - isResponseTypeXML
+  - isResponseTypeFile
+- `API Base` (angular 2):
+  - Support for "response types" (this fix download files)
+
+### Fixed
+- `API Base` (angular 2):
+  - Now `false` values are send to Back End, previosly was ignored like `null` and `undefined`.
+
 ## [2.5.3] - 2021-02-22
 
 ### Fixed
