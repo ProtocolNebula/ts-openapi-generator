@@ -16,7 +16,7 @@ export interface HttpOptions {
         [param: string]: string | string[];
       };
   reportProgress?: boolean;
-  responseType?: any;
+  responseType?: 'arraybuffer' | 'blob' | 'json' | 'text';
   withCredentials?: boolean;
 }
 
