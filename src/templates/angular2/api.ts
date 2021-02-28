@@ -65,12 +65,14 @@ export class {{groupName}}Service {
         }}{{
         #isFormRequest}}this.apiService.generateFormData(recursiveStringfy(requestBody)){{/isFormRequest
         }}{{/requestBodyType}},
-      {{!
-        // Remove "null" line and uncomment line below
-        // if you want to set "content-type" on headers
-      }}
-      null,
-      // { {{#requestContentType}} headers: { 'Content-Type': '{{{requestContentType}}}' } {{/requestContentType}} },
+      {
+        {{#requestContentType}}// headers: { 'Content-Type': '{{{requestContentType}}}' }{{/requestContentType}}
+        responseType: '{{
+          #isResponseTypeText}}text{{/isResponseTypeText
+          }}{{#isResponseTypeJson}}json{{/isResponseTypeJson
+          }}{{#isResponseTypeFile}}blob{{/isResponseTypeFile
+        }}',
+      },
     ){{^isResponsePrimitive}}
       .pipe(
         map(response => recursiveInstance({{responseType}}, response))
