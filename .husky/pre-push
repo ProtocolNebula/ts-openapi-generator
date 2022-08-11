@@ -1,0 +1,10 @@
+#!/usr/bin/bash
+. "$(dirname -- "$0")/_/husky.sh"
+
+npm run generate:examples && \
+  (
+    git checkout -- examples/generated/mocks/json-server/db.json && \
+    git add examples/ && \
+    git commit -m 'Updated examples' \
+    || echo 'No example changes'
+  )
