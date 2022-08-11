@@ -6,6 +6,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.6.0] - 2022-08-11
+
+### Breaking Changes
+
+- Now uses NodeJS 16.10.X+ (not tested with NodeJS 12.X.X)
+
+### Added
+
+- GitHub Action to publish automatically in NPM registry after each new release (https://docs.github.com/en/packages/quickstart#publishing-your-package)
+
+### Updates
+
+- Updated all depdendencies and devDependencies
+- Removed unused dependencies (may be re-added in the future)
+
 ## [2.5.4] - 2021-02-28
 
 ### Added
