@@ -1,5 +1,5 @@
 import * as yargs from 'yargs';
-import { readFileSync } from 'fs';
+import { readFileSync } from 'fs-extra';
 
 export const argumentsInstance = yargs
   .alias('version', 'v')
